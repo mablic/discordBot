@@ -44,7 +44,7 @@ def run_discord_bot():
                 try:
                     m = re.compile(r'(-tag)\s?(.*)')
                     tagName = m.match(userMessage)
-                    tagName = tagName[2]
+                    tagName = tagName[2].upper()
                     # print(f"PRIVATE: {userName} add tag '{tagName}'")
                     botControl.add_tag(userID, tagName) 
                 except Exception as e:
@@ -75,10 +75,18 @@ def run_discord_bot():
                 finally:
                     pass
             else:
-                pass
+                if userMessage and userMessage[0] == '-':
+                    if '-private' in userMessage:
+                        await send_message(message, userMessage, is_private=True)
+                    else:
+                        await send_message(message, userMessage, is_private=False)
         else:
             # print(f"PRIVATE: {userName} said '{userMessage}' ({msgChannel})")
-            await send_message(message, userMessage, is_private=False)
+            if userMessage and userMessage[0] == '-':
+                if '-private' in userMessage:
+                    await send_message(message, userMessage, is_private=True)
+                else:
+                    await send_message(message, userMessage, is_private=False)
 
     @client.event
     async def on_voice_state_update(member, before, after):
@@ -89,18 +97,14 @@ def run_discord_bot():
             
             if 'Study Room' in str(after.channel.name):
                 # print(f" {member.name} join the: {str(after.channel.name)} ")
-                #pic = '/Users/yingxie/desktop/1.png'
-                #with open(pic, 'rb') as f:
-                #    picture = discord.File(f)
-                #    await member.send(file=picture)
                 botControl.add_user(str(member.id))
-                await member.send("Start Timing!")
+                await member.send("Start Timing! (Use -tag [XX your Tag] to add your focus.)")
         else:
             if before.channel is not None:
                 # print(f" {member.name} left the: {str(before.channel.name)} ")
                 if 'Study Room' in str(before.channel.name):
                     botControl.remove_user(str(member.id))
-                    await member.send("Finished Timing!")
+                    await member.send("Finished Timing! (Use -get graph [Interval] [Chart Type] to see your data.)")
 
     client.run(TOKEN)
 
