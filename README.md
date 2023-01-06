@@ -29,8 +29,8 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
  - [-tag] [XXX]: tag the time with customize focus
  - [-get details]: grab the historical data in table view
  - [-get graph] [OPTIONAL1] [OPTIONAL2]
-        - [OPTIONAL1]: time interval (day/week/month) (default: day)
-        - [OPTIONAL2]: chart type (line/bar) (default: line)  
+    - [OPTIONAL1]: time interval (day/week/month) (default: day)
+    - [OPTIONAL2]: chart type (line/bar) (default: line)  
 
 ## Development phase (current Beta v0.1)
 
