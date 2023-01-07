@@ -63,20 +63,4 @@ class Control:
 if __name__ == '__main__':
     pass
     # m = Control()
-
-    # async def runCode():
-    #     divs1 = loop.create_task(m.get_data_graph('482041455360344064', 'month', 'bar'))
-    #     divs2 = loop.create_task(m.get_data_graph('482041455360344064', 'week', 'bar'))
-    #     divs3 = loop.create_task(m.get_data_graph('482041455360344064', 'day', 'bar'))
-    #     await asyncio.wait([divs1,divs2,divs3])
-    # # async def runCode():
-    # #     m.get_data_graph('482041455360344064', 'month', 'bar')
-    # #     m.get_data_graph('482041455360344064', 'week', 'bar')
-    # #     m.get_data_graph('482041455360344064', 'day', 'bar')
-    # try:
-    #     loop = asyncio.get_event_loop()
-    #     loop.run_until_complete(runCode())
-    # except Exception as e:
-    #     pass
-    # finally:
-    #     loop.close()
+    # m.get_data_graph('482041455360344064', 'day', 'bar')

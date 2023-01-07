@@ -3,7 +3,9 @@ import responses
 import control
 import re
 import os
+import log
 
+from datetime import datetime
 from discord.utils import find
 from discord.ext.commands import Bot
 
@@ -21,10 +23,13 @@ def run_discord_bot():
     # intents.members = True
     client = discord.Client(intents=intents)
     botControl = control.Control()
+    dateFormat = "%Y-%m-%d %H:%M:%S"
 
     @client.event
     async def on_ready():
         print(f'{client.user} is now running')
+        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": bot is now running"
+        log.write_into_log(printMsg)
     
     @client.event
     async def on_message(message):
@@ -38,22 +43,26 @@ def run_discord_bot():
         dmChannel = await message.author.create_dm()
 
         # print(f"{userName} said '{userMessage}' ({msgChannel})")
-
+        printMsg = ""
         if message.channel.id == dmChannel.id:
+            
             if '-tag' in userMessage:
                 try:
                     m = re.compile(r'(-tag)\s?(.*)')
                     tagName = m.match(userMessage)
                     tagName = tagName[2].upper()
                     # print(f"PRIVATE: {userName} add tag '{tagName}'")
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " add tag: " + tagName
                     botControl.add_tag(userID, tagName) 
                 except Exception as e:
                     print(e)
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " running into error: " + str(e)
                 finally:
                     pass
             elif '-get details' in userMessage:
                 response = botControl.get_data_details(userID)
                 # print(f"DETAILS: {response} add message '{userMessage}'")
+                printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get details: " + userMessage
                 await send_message(message, 'details in minutes by date below...', is_private=True)
                 for r in response:
                     await send_message(message, r, is_private=True)
@@ -65,6 +74,7 @@ def run_discord_bot():
                     interval = 'day' if m[2] == '' else m[2]
                     chartType = 'line' if m[3] == '' else m[3]
                     # print(f"INTERVAL: {interval} CHARTTYPE '{chartType}')")
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ")" 
                     filePath = botControl.get_data_graph(userID, interval, chartType)
                     with open(filePath, 'rb') as f:
                         picture = discord.File(f)
@@ -72,21 +82,23 @@ def run_discord_bot():
                     botControl.remove_file(filePath)
                 except Exception as e:
                     print(e)
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ") error: " + str(e) 
                 finally:
                     pass
             else:
                 if userMessage and userMessage[0] == '-':
-                    if '-private' in userMessage:
-                        await send_message(message, userMessage, is_private=True)
-                    else:
-                        await send_message(message, userMessage, is_private=False)
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " send message: " + userMessage
+                    await send_message(message, userMessage, is_private=False)
         else:
             # print(f"PRIVATE: {userName} said '{userMessage}' ({msgChannel})")
             if userMessage and userMessage[0] == '-':
                 if '-private' in userMessage:
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for private: " + userMessage
                     await send_message(message, userMessage, is_private=True)
                 else:
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for public: " + userMessage
                     await send_message(message, userMessage, is_private=False)
+        log.write_into_log(printMsg)
 
     @client.event
     async def on_voice_state_update(member, before, after):
@@ -109,6 +121,5 @@ def run_discord_bot():
     client.run(TOKEN)
 
 if __name__ == '__main__':
-
     pass
     # botModel = botModel.BotModel()
