@@ -24,13 +24,14 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
 ## Current Function (current Beta v0.1)
 
  - [-help]: help feature
- - [-hi] or [-hello]: say hi to the Bot
+ - [-hi] or [!hello]: say hi to the Bot
  - [-roll]: roll a dice between 1 and 100
  - [-tag] [XXX]: tag the time with customize focus
  - [-get details]: grab the historical data in table view
  - [-get graph] [OPTIONAL1] [OPTIONAL2]
     - [OPTIONAL1]: time interval (day/week/month) (default: day)
     - [OPTIONAL2]: chart type (line/bar) (default: line)  
+ - [-get date] [OPTIONAL1]: get the date's data via pie chart
 
 ## Development phase (current Beta v0.1)
 

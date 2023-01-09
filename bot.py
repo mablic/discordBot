@@ -24,6 +24,7 @@ def run_discord_bot():
     client = discord.Client(intents=intents)
     botControl = control.Control()
     dateFormat = "%Y-%m-%d %H:%M:%S"
+    dataDateFormat = "%Y-%m-%d"
 
     @client.event
     async def on_ready():
@@ -44,61 +45,74 @@ def run_discord_bot():
 
         # print(f"{userName} said '{userMessage}' ({msgChannel})")
         printMsg = ""
-        if message.channel.id == dmChannel.id:
-            
-            if '-tag' in userMessage:
-                try:
-                    m = re.compile(r'(-tag)\s?(.*)')
-                    tagName = m.match(userMessage)
-                    tagName = tagName[2].upper()
-                    # print(f"PRIVATE: {userName} add tag '{tagName}'")
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " add tag: " + tagName
-                    botControl.add_tag(userID, tagName) 
-                except Exception as e:
-                    print(e)
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " running into error: " + str(e)
-                finally:
-                    pass
-            elif '-get details' in userMessage:
-                response = botControl.get_data_details(userID)
-                # print(f"DETAILS: {response} add message '{userMessage}'")
-                printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get details: " + userMessage
-                await send_message(message, 'details in minutes by date below...', is_private=True)
-                for r in response:
-                    await send_message(message, r, is_private=True)
-            elif '-get graph' in userMessage:
-                # print(f"GET GRAPH: {userName} said '{userMessage}'")
-                try:
-                    m = re.compile(r'(-get graph)\s?([a-zA-Z]*)\s?([a-zA-Z]*)')
+        if userMessage and userMessage[0] == '-':
+            if '-get date' in userMessage:
+                m = re.compile(r'(-get date)\s?([0-9]{4}-[0-9]{2}-[0-9]{2})')
+                if not m.match(userMessage):
+                    day = datetime.strftime(datetime.now(), dataDateFormat)
+                else:
                     m = m.match(userMessage)
-                    interval = 'day' if m[2] == '' else m[2]
-                    chartType = 'line' if m[3] == '' else m[3]
-                    # print(f"INTERVAL: {interval} CHARTTYPE '{chartType}')")
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ")" 
-                    filePath = botControl.get_data_graph(userID, interval, chartType)
-                    with open(filePath, 'rb') as f:
-                        picture = discord.File(f)
-                        await message.channel.send(file=picture)
-                    botControl.remove_file(filePath)
-                except Exception as e:
-                    print(e)
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ") error: " + str(e) 
-                finally:
-                    pass
+                    day = m[2]
+                printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " get date: " + day
+                # print(printMsg)
+                filePath = botControl.get_data_graph(userID, 'pie', 'day', day)
+                with open(filePath, 'rb') as f:
+                    picture = discord.File(f)
+                    await message.channel.send(file=picture)
+                botControl.remove_file(filePath)
+            elif message.channel.id == dmChannel.id:
+                if '-tag' in userMessage:
+                    try:
+                        m = re.compile(r'(-tag)\s?(.*)')
+                        tagName = m.match(userMessage)
+                        tagName = tagName[2].upper()
+                        # print(f"PRIVATE: {userName} add tag '{tagName}'")
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " add tag: " + tagName
+                        botControl.add_tag(userID, tagName) 
+                    except Exception as e:
+                        print(e)
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " running into error: " + str(e)
+                    finally:
+                        pass
+                elif '-get details' in userMessage:
+                    response = botControl.get_data_details(userID)
+                    # print(f"DETAILS: {response} add message '{userMessage}'")
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get details: " + userMessage
+                    await send_message(message, 'details in minutes by date below...', is_private=True)
+                    for r in response:
+                        await send_message(message, r, is_private=True)
+                elif '-get graph' in userMessage:
+                    # print(f"GET GRAPH: {userName} said '{userMessage}'")
+                    try:
+                        m = re.compile(r'(-get graph)\s?([a-zA-Z]*)\s?([a-zA-Z]*)')
+                        m = m.match(userMessage)
+                        interval = 'day' if m[2] == '' else m[2]
+                        chartType = 'line' if m[3] == '' else m[3]
+                        # print(f"INTERVAL: {interval} CHARTTYPE '{chartType}')")
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ")" 
+                        filePath = botControl.get_data_graph(userID, chartType, interval, '')
+                        with open(filePath, 'rb') as f:
+                            picture = discord.File(f)
+                            await message.channel.send(file=picture)
+                        botControl.remove_file(filePath)
+                    except Exception as e:
+                        print(e)
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ") error: " + str(e) 
+                    finally:
+                        pass
+                else:
+                    if userMessage and userMessage[0] == '-':
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " send message: " + userMessage
+                        await send_message(message, userMessage, is_private=False)
             else:
-                if userMessage and userMessage[0] == '-':
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " send message: " + userMessage
-                    await send_message(message, userMessage, is_private=False)
-        else:
-            # print(f"PRIVATE: {userName} said '{userMessage}' ({msgChannel})")
-            if userMessage and userMessage[0] == '-':
+                # print(f"PRIVATE: {userName} said '{userMessage}' ({msgChannel})")
                 if '-private' in userMessage:
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for private: " + userMessage
-                    await send_message(message, userMessage, is_private=True)
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for private: " + userMessage
+                        await send_message(message, userMessage, is_private=True)
                 else:
                     printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for public: " + userMessage
                     await send_message(message, userMessage, is_private=False)
-        log.write_into_log(printMsg)
+            log.write_into_log(printMsg)
 
     @client.event
     async def on_voice_state_update(member, before, after):

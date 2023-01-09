@@ -29,7 +29,14 @@ class MongoDB:
         self.studyTable = db[Table.studyDB]
 
     def insert_to_db(self, userDict):
-        self.studyTable.insert_one(userDict)
+        if bool(userDict):
+            return
+        try:
+            self.studyTable.insert_one(userDict)
+        except Exception as e:
+            print(e)
+        finally:
+            pass
 
     def find_data_from_db(self, userName):
         return self.studyTable.find({'userName': userName})

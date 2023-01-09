@@ -3,6 +3,7 @@ import timer
 import graph
 import pandas as pd
 import asyncio
+from datetime import datetime
 
 class Control:
     
@@ -45,14 +46,18 @@ class Control:
             response.append(nList)
         return response
 
-    def get_data_graph(self, userName, interval, graphType):
+    def get_data_graph(self, userName, graphType, interval='day', day=datetime.strftime(datetime.now(),'%Y-%m-%d')):
         self.DB.connect_to_db()
         self.graph = graph.Graph()
         data = self.DB.find_data_from_db(userName)
         df = pd.DataFrame(list(data))
         df.fillna(0, inplace=True)
         df.drop(columns=['_id', 'userName'], inplace=True)
-        return self.graph.get_graph(df, userName, interval, graphType)
+
+        if graphType == 'pie':
+            return self.graph.get_public_graph(df, userName, day)
+        else:
+            return self.graph.get_graph(df, userName, interval, graphType)
 
     def remove_file(self, filePath):
         self.graph.remove_file(filePath)
@@ -63,4 +68,5 @@ class Control:
 if __name__ == '__main__':
     pass
     # m = Control()
-    # m.get_data_graph('482041455360344064', 'day', 'bar')
+    # m.get_data_graph('482041455360344064', 'bar', 'day')
+    # m.get_data_graph('482041455360344064', 'pie', 'day')

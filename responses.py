@@ -12,11 +12,13 @@ def handle_response(message):
         response += "[-roll]: roll a dice from between 1 and 100\n"
         response += "[-help]: help menu\n"
         response += "[-private]: start a private chart with the bot\n"
+        response += "[-get day] [OPTIONAL(date)]: get the pie chart of the date\n"
+        response += "************************PRIVATE CHANNEL ONLY*********************************************\n"
         response += "[-get details]: get your records in details\n"
-        response += "[-get graph]: [OPTIONAL(Interval)] [OPTIONAL(Graph type)] to graph your records\n"
+        response += "[-get graph] [OPTIONAL(Interval)] [OPTIONAL(Graph type)] to graph your records\n"
         response += "      [OPTIONAL(Interval)]: [day](default) [week] [month] to group your data\n"
         response += "      [OPTIONAL(Graph type)]: [line](default) [bar] with the presentation of the data\n"
-        response += "[-tag]: [OPTIONAL(Fous)] tag your focus to the clock\n"
+        response += "[-tag] [OPTIONAL(Fous)] tag your focus to the clock\n"
         response += "      [OPTIONAL(Fous)]: your focus, please use the same moving forward"
         return response
     if '-private' in message:

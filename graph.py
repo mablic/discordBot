@@ -4,12 +4,15 @@ import matplotlib.dates as mdates
 import pandas as pd
 import numpy as np
 import os
+import re
 import datetime
 import matplotlib.colors as mcolors
 from datetime import datetime, timedelta
 
 
-# matplotlib.use('Agg')
+def func(pct, allvals):
+    absolute = int(np.round(pct/100.*np.sum(allvals)))
+    return "{:.1f}%\n({:d} mins)".format(pct, absolute)
 
 class Graph:
 
@@ -34,7 +37,7 @@ class Graph:
         else:
             pass
         df = df.groupby('studyTime')[columns].sum()
-        print(df)
+        # print(df)
 
         fig, ax = plt.subplots()
         cCode = [key for key in mcolors.BASE_COLORS]
@@ -59,10 +62,14 @@ class Graph:
         plt.xlabel('date')
         plt.ylabel('minutes')
         plt.title("Study Summary by " + interval)
+        plt.legend()
+        filename = self.save_file(userID, interval)
+        plt.savefig(filename)
+        return filename
+    
+    def save_file(self, userID='', interval=''):
         filename = os.getcwd() + '/images/user_' + userID + '_' \
             + interval + '_' + datetime.strftime(datetime.now(),self.dateFormat) + '.png'
-        plt.legend()
-        plt.savefig(filename)
         self.filePath = filename
         return filename
 
@@ -73,7 +80,53 @@ class Graph:
         pass
         # os.remove(self.filePath)
 
+    def get_public_graph(self, df, userID='0', day=datetime.strftime(datetime.now(),'%Y-%m-%d')):
+
+        m = re.compile(r'[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}')
+        if not m.match(day):
+            day = datetime.strftime(datetime.now(), self.dataDateFormat)
+
+        df.fillna(0)
+        columns = df.columns.values.tolist()
+        df = df.groupby('studyTime')[columns].sum()
+        df = df.loc[day]
+
+        labels = list(df.keys())
+        sizes = df.tolist()
+        explode = tuple([0.1 if x==max(sizes) else 0 for x in sizes])
+
+        fig1, ax1 = plt.subplots()
+        ax1.pie(sizes, explode=explode, labels=labels, autopct=lambda pct: func(pct, sizes),
+                shadow=True, startangle=90)
+        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+        plt.gcf().autofmt_xdate()
+        plt.title("Study Summary")
+        plt.legend()
+        filename = self.save_file(userID, 'pie')
+        plt.savefig(filename)
+        return filename
 
 if __name__ == '__main__':
     
     pass
+    # df = pd.DataFrame({'studyTime': ['01/02/2022', '01/04/2022','01/03/2022', '01/04/2022','01/04/2022'],'FRM': [380, 370, 24, 26,21], 'CFA': [np.nan, 370, np.nan, 26,18], 'CPA': [12, 45, 32, 41,5]})
+    # df.fillna(0)
+    # columns = df.columns.values.tolist()
+    # df = df.groupby('studyTime')[columns].sum()
+    # df = df.loc['01/04/2022']
+    # print(df)
+
+    # labels = list(df.keys())
+    # sizes = df.tolist()
+    # explode = tuple([0.1 if x==max(sizes) else 0 for x in sizes])
+
+    # fig1, ax1 = plt.subplots()
+    # ax1.pie(sizes, explode=explode, labels=labels, autopct=lambda pct: func(pct, sizes),
+    #         shadow=True, startangle=90)
+    # ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    # plt.gcf().autofmt_xdate()
+    # plt.legend()
+    # plt.title("Study Summary")
+    # plt.show()
