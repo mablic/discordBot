@@ -29,7 +29,7 @@ class MongoDB:
         self.studyTable = db[Table.studyDB]
 
     def insert_to_db(self, userDict):
-        if bool(userDict):
+        if not bool(userDict):
             return
         try:
             self.studyTable.insert_one(userDict)
