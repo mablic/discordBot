@@ -34,12 +34,15 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
  - [-get date] [OPTIONAL1]: get the date's data via pie chart
 
 - Example of the Line Chart
+
 ![image](https://user-images.githubusercontent.com/19805677/211453713-48ad667a-5d57-47b7-b64c-87acd90d97be.png)
 
 - Example of the Bar Chart
+
 ![image](https://user-images.githubusercontent.com/19805677/211453737-d8e56b77-181f-463a-95f2-10cde5fa31c4.png)
 
 - Example of the Pie Chart
+
 ![image](https://user-images.githubusercontent.com/19805677/211453755-22b85213-326a-43b9-9128-8d90fa39c574.png)
 
 ## Development phase (current Beta v0.1)
