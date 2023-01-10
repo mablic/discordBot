@@ -33,6 +33,15 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
     - [OPTIONAL2]: chart type (line/bar) (default: line)  
  - [-get date] [OPTIONAL1]: get the date's data via pie chart
 
+- Example of the Line Chart
+![plot](./Users/yingxie/Downloads/line.png)
+
+- Example of the Bar Chart
+![plot](./Users/yingxie/Downloads/bar.png)
+
+- Example of the Pie Chart
+![plot](./Users/yingxie/Downloads/pie.png)
+
 ## Development phase (current Beta v0.1)
 
  - Beta v0.1:
