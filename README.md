@@ -51,6 +51,10 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
     - Production release of the Bot
     - Live watch for two Discord group
 
+ - Beta v0.2:
+    - Bugs fix
+    - Pie chart
+
 ## Authors
 Mai He [https://github.com/mablic/]
 ## Acknowledgments
