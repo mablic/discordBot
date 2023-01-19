@@ -29,12 +29,31 @@ class Control:
     def remove_user(self, userName):
 
         userDict = self.timer.remove_user(userName)
-        self.DB.connect_to_db()
+        try:
+            self.DB.connect_to_db()
+        except Exception as e:
+            print(str(e))
+            return False
         self.DB.insert_to_db(userDict)
+        return True
+
+    def connect_to_db(self, userName):
+        try:
+            self.DB.connect_to_db()
+            self.graph = graph.Graph()
+            data = self.DB.find_data_from_db(userName)
+        except ValueError as e:
+            raise
+        except Exception as e:
+            print(f"Error with userName {userName}")
+            raise TypeError("No user found!")
+        return data
 
     def get_data_details(self, userName):
-        self.DB.connect_to_db()
-        data = self.DB.find_data_from_db(userName)
+        try:
+            data = self.connect_to_db(userName)
+        except Exception as e:
+            raise
         df = pd.DataFrame(list(data))
         df.fillna(0)
         columns = df.columns.values.tolist()
@@ -47,9 +66,10 @@ class Control:
         return response
 
     def get_data_graph(self, userName, graphType, interval='day', day=datetime.strftime(datetime.now(),'%Y-%m-%d')):
-        self.DB.connect_to_db()
-        self.graph = graph.Graph()
-        data = self.DB.find_data_from_db(userName)
+        try:
+            data = self.connect_to_db(userName)
+        except Exception as e:
+            raise
         df = pd.DataFrame(list(data))
         df.fillna(0, inplace=True)
         df.drop(columns=['_id', 'userName'], inplace=True)
@@ -68,5 +88,5 @@ class Control:
 if __name__ == '__main__':
     pass
     # m = Control()
-    # m.get_data_graph('482041455360344064', 'bar', 'day')
+    # print(m.get_data_graph('482041455360344064', 'pie', 'day', '2022-01-17'))
     # m.get_data_graph('482041455360344064', 'pie', 'day')

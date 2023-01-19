@@ -23,9 +23,13 @@ class MongoDB:
         self.collection = None
 
     def connect_to_db(self):
-        connectionString = os.environ.get('MONGODB_CONNECTION')
-        cluster = MongoClient(connectionString, tlsCAFile=certifi.where())
-        db = cluster['studyDB']
+        try:
+            connectionString = os.environ.get('MONGODB_CONNECTION')
+            cluster = MongoClient(connectionString, tlsCAFile=certifi.where())
+            db = cluster['studyDB']
+        except Exception as e:
+            print(f"Not able to connect to the DB {str(e)}")
+            raise ValueError("No DB Connection!")
         self.studyTable = db[Table.studyDB]
 
     def insert_to_db(self, userDict):
@@ -34,7 +38,7 @@ class MongoDB:
         try:
             self.studyTable.insert_one(userDict)
         except Exception as e:
-            print(e)
+            print(f"Not able to insert data: {e}")
         finally:
             pass
 

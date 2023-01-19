@@ -55,11 +55,20 @@ def run_discord_bot():
                     day = m[2]
                 printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " get date: " + day
                 # print(printMsg)
-                filePath = botControl.get_data_graph(userID, 'pie', 'day', day)
-                with open(filePath, 'rb') as f:
-                    picture = discord.File(f)
-                    await message.channel.send(file=picture)
-                botControl.remove_file(filePath)
+                try:
+                    filePath = botControl.get_data_graph(userID, 'pie', 'day', day)
+                    with open(filePath, 'rb') as f:
+                        picture = discord.File(f)
+                        await message.channel.send(file=picture)
+                    botControl.remove_file(filePath)
+                except ValueError as e:
+                    await send_message(message, "No DB Connection!", is_private=True)
+                    printMsg = printMsg + " No DB Connection!"
+                except Exception as e:
+                    await send_message(message, "No Data Found!", is_private=True)
+                    printMsg = printMsg + " No Data Found!"
+                finally:
+                    pass
             elif message.channel.id == dmChannel.id:
                 if '-tag' in userMessage:
                     try:
@@ -75,12 +84,17 @@ def run_discord_bot():
                     finally:
                         pass
                 elif '-get details' in userMessage:
-                    response = botControl.get_data_details(userID)
-                    # print(f"DETAILS: {response} add message '{userMessage}'")
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get details: " + userMessage
-                    await send_message(message, 'details in minutes by date below...', is_private=True)
-                    for r in response:
-                        await send_message(message, r, is_private=True)
+                    try:
+                        response = botControl.get_data_details(userID)
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get details: " + userMessage
+                        await send_message(message, 'details in minutes by date below...', is_private=True)
+                        for r in response:
+                            await send_message(message, r, is_private=True)
+                    except Exception as e:
+                        await send_message(message, "No DB Connection!", is_private=True)
+                        printMsg = printMsg + " No DB Connection!"
+                    finally:
+                        pass
                 elif '-get graph' in userMessage:
                     # print(f"GET GRAPH: {userName} said '{userMessage}'")
                     try:
@@ -90,11 +104,20 @@ def run_discord_bot():
                         chartType = 'line' if m[3] == '' else m[3]
                         # print(f"INTERVAL: {interval} CHARTTYPE '{chartType}')")
                         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ")" 
-                        filePath = botControl.get_data_graph(userID, chartType, interval, '')
-                        with open(filePath, 'rb') as f:
-                            picture = discord.File(f)
-                            await message.channel.send(file=picture)
-                        botControl.remove_file(filePath)
+                        try:
+                            filePath = botControl.get_data_graph(userID, chartType, interval, '')
+                            with open(filePath, 'rb') as f:
+                                picture = discord.File(f)
+                                await message.channel.send(file=picture)
+                            botControl.remove_file(filePath)
+                        except ValueError as e:
+                            await send_message(message, "No DB Connection!", is_private=True)
+                            printMsg = printMsg + " No DB Connection!"
+                        except Exception as e:
+                            await send_message(message, "No Data Found!", is_private=True)
+                            printMsg = printMsg + " No Data Found!"
+                        finally:
+                            pass
                     except Exception as e:
                         print(e)
                         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ") error: " + str(e) 
@@ -129,8 +152,10 @@ def run_discord_bot():
             if before.channel is not None:
                 # print(f" {member.name} left the: {str(before.channel.name)} ")
                 if 'Study Room' in str(before.channel.name):
-                    botControl.remove_user(str(member.id))
-                    await member.send("Finished Timing! (Use -get graph [Interval] [Chart Type] to see your data.)")
+                    if botControl.remove_user(str(member.id)):
+                        await member.send("Finished Timing! (Use -get graph [Interval] [Chart Type] to see your data.)")
+                    else:
+                        await member.send("Error with the Timing! Please reach out for support!")
 
     client.run(TOKEN)
 

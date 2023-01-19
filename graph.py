@@ -86,10 +86,14 @@ class Graph:
         if not m.match(day):
             day = datetime.strftime(datetime.now(), self.dataDateFormat)
 
-        df.fillna(0)
-        columns = df.columns.values.tolist()
-        df = df.groupby('studyTime')[columns].sum()
-        df = df.loc[day]
+        try:
+            df.fillna(0)
+            columns = df.columns.values.tolist()
+            df = df.groupby('studyTime')[columns].sum()
+            df = df.loc[day]
+        except Exception as e:
+            print(f"Keys {day} error with message: {str(e)}.")
+            return "No data found!"
 
         labels = list(df.keys())
         sizes = df.tolist()

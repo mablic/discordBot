@@ -55,6 +55,9 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
     - Bugs fix
     - Pie chart
 
+ - Beta v0.3:
+    - Bugs fix with read database error
+
 ## Authors
 Mai He [https://github.com/mablic/]
 ## Acknowledgments
