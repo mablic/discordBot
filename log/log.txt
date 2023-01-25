@@ -1,13 +1,9 @@
 Discord Bot Log Below:2023-01-07 10:37:11: bot is now running
-2023-01-18 21:08:20: bot is now running
-2023-01-18 21:08:34: mablic#4320 get graph: (interval: day) (chartType: bar) error: 'MongoDB' object has no attribute '_connect_to_db'
-2023-01-18 21:10:47: bot is now running
-2023-01-18 21:13:32: mablic#4320 get graph: (interval: day) (chartType: bar)
-2023-01-18 21:13:40: mablic#4320 get details: -get details
-2023-01-18 21:14:42: mablic#4320 send message: -help
-2023-01-18 21:15:02: mablic#4320 from channel Direct Message with Unknown User get date: 2023-01-17
-2023-01-18 21:18:57: bot is now running
-2023-01-18 21:19:00: mablic#4320 from channel Direct Message with Unknown User get date: 2023-01-18 No Data Found!
-2023-01-18 21:19:39: mablic#4320 get graph: (interval: day) (chartType: line)
-2023-01-18 21:19:47: mablic#4320 get graph: (interval: day) (chartType: bar)
-2023-01-18 21:19:57: mablic#4320 from channel Direct Message with Unknown User get date: 2022-01-01 No Data Found!
+2023-01-25 11:25:57: bot is now running
+2023-01-25 11:25:57: Bot start waiting 6. End at 2023-01-25 11:26:03.  Push to the DB!
+2023-01-25 11:26:16: Bot start waiting 6. End at 2023-01-25 11:26:22.  Push to the DB!
+2023-01-25 11:26:31: mablic#4320 from channel general send message for public: -get graph day bar
+2023-01-25 11:27:01: mablic#4320 get graph: (interval: day) (chartType: bar)
+2023-01-25 11:27:06: mablic#4320 from channel Direct Message with Unknown User get date: 2023-01-25
+2023-01-25 11:27:16: mablic#4320 send message: -help
+2023-01-25 11:27:21: mablic#4320 send message: -roll

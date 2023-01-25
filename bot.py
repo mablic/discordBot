@@ -4,10 +4,17 @@ import control
 import re
 import os
 import log
+import asyncio
+import checkIn
+import syncBot
+import nest_asyncio
 
 from datetime import datetime
 from discord.utils import find
 from discord.ext.commands import Bot
+from enum import Enum
+
+nest_asyncio.apply()
 
 async def send_message(message, userMessage, is_private):
     try:
@@ -15,23 +22,80 @@ async def send_message(message, userMessage, is_private):
         await message.author.send(response) if is_private else await message.channel.send(response)
     except Exception as e:
         print(e)
-
+    finally:
+        pass
 
 def run_discord_bot():
+    
     TOKEN = os.environ.get('DISCORD_BOT_TOKEN')
     intents = discord.Intents.all()
-    # intents.members = True
     client = discord.Client(intents=intents)
     botControl = control.Control()
     dateFormat = "%Y-%m-%d %H:%M:%S"
     dataDateFormat = "%Y-%m-%d"
+    botSet = syncBot.SyncBot()
+    checkControl = checkIn.CheckIn()
+
+    @client.event
+    async def process_users_message():
+        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": Bot start waiting " + str(botSet.waitTime) + ". "
+        await asyncio.sleep(botSet.waitTime)
+        users = checkControl.get_users()
+        printMsg = printMsg + "End at " + datetime.strftime(datetime.now(), dateFormat) + ". "
+
+        for guild in client.guilds:
+            for channel in guild.text_channels:
+                if channel.id in users.keys():
+                    for key in users[channel.id].keys():
+                        await channel.send(''.join(users[channel.id][key]))
+        try:
+            userDict = checkControl.check_to_db()
+            if userDict:
+                botControl.remove_checkIn(userDict)
+                printMsg = printMsg + " Push to the DB!"
+                log.write_into_log(printMsg)
+        except Exception as e:
+            await channel.send("No DB Connection!")
+            printMsg = printMsg + " No DB Connection!"
+            log.write_into_log(printMsg)
+        finally:
+            pass
+
+        printMsg = ""
+        botSet.waitTime = 6
+        # botSet.waitTime = 24 * 60 * 60
+
+    async def run_msg():
+        await process_users_message()
+
+    def start_task():
+        while not botSet.botWait:
+            botSet.botWait = 1
+            task = asyncio.ensure_future(run_msg())
+            task.add_done_callback(on_utilized)
+
+    def on_utilized(_):
+        botSet.botWait = 0
+        start_task()
 
     @client.event
     async def on_ready():
         print(f'{client.user} is now running')
         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": bot is now running"
         log.write_into_log(printMsg)
-    
+        hours = datetime.now().hour
+        mins = datetime.now().minute
+        # botSet.waitTime = ((24-hours+6)*60 + (59-mins)) *24
+        botSet.waitTime = 6
+        # kick in the check in
+        loop = asyncio.get_event_loop()
+        try:
+            start_task()
+            loop.run_forever()
+        finally:
+            loop.run_until_complete(loop.shutdown_asyncgens())
+            loop.close()
+
     @client.event
     async def on_message(message):
         if message.author == client.user:
@@ -40,12 +104,17 @@ def run_discord_bot():
         userName = str(message.author)
         userMessage = str(message.content)
         msgChannel = str(message.channel)
+        # msgGuild = message.guild 
         userID = str(message.author.id)
         dmChannel = await message.author.create_dm()
 
         # print(f"{userName} said '{userMessage}' ({msgChannel})")
         printMsg = ""
-        if userMessage and userMessage[0] == '-':
+        if 'check-in' in msgChannel:
+            printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " check-in."
+            # print(f"Channel: {msgChannel} user: {userName} speak at the check-in.")
+            checkControl.add_user(message.channel.id, userID, userName)
+        elif userMessage and userMessage[0] == '-':
             if '-get date' in userMessage:
                 m = re.compile(r'(-get date)\s?([0-9]{4}-[0-9]{2}-[0-9]{2})')
                 if not m.match(userMessage):

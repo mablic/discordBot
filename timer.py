@@ -64,12 +64,9 @@ class Timer:
         self.userDict[userName].pop('startTime')
         returnDict = self.userDict[userName]
         self.userDict.pop(userName)
-
         return returnDict
-        # push into the DBs
-        # for tag in self.userDict[userName].keys():
-        #     print(f" {userName} study {tag} for {self.userDict[userName][tag]:0.4f} second!")
-        # self.userDict.pop(userName)            
+
+
     def __del__(self):
         pass
 

@@ -26,11 +26,20 @@ class Control:
     def add_tag(self, userName, tagName):
         self.timer.add_tag(userName, tagName)
     
-    def remove_user(self, userName):
-
-        userDict = self.timer.remove_user(userName)
+    def remove_checkIn(self, dict):
         try:
-            self.DB.connect_to_db()
+            self.DB.connect_to_db('studyDB', 'checkDB')
+        except Exception as e:
+            print(str(e))
+            return False
+        self.DB.insert_to_db(dict)
+        return True
+
+    def remove_user(self, userId):
+
+        userDict = self.timer.remove_user(userId)
+        try:
+            self.DB.connect_to_db('studyDB','studyDB')
         except Exception as e:
             print(str(e))
             return False
@@ -39,7 +48,7 @@ class Control:
 
     def connect_to_db(self, userName):
         try:
-            self.DB.connect_to_db()
+            self.DB.connect_to_db('studyDB','studyDB')
             self.graph = graph.Graph()
             data = self.DB.find_data_from_db(userName)
         except ValueError as e:

@@ -7,8 +7,6 @@ import numpy as np
 from pymongo import MongoClient
 sys.path.insert(1,os.getcwd() + '/web_app')
 
-class Table:
-    studyDB = 'studyDB'
 
 class MongoDB:
 
@@ -22,15 +20,16 @@ class MongoDB:
     def __init__(self) -> None:
         self.collection = None
 
-    def connect_to_db(self):
+    def connect_to_db(self, clusterName='studyDB', table='studyDB'):
+        # pass
         try:
             connectionString = os.environ.get('MONGODB_CONNECTION')
             cluster = MongoClient(connectionString, tlsCAFile=certifi.where())
-            db = cluster['studyDB']
+            db = cluster[clusterName]
         except Exception as e:
             print(f"Not able to connect to the DB {str(e)}")
             raise ValueError("No DB Connection!")
-        self.studyTable = db[Table.studyDB]
+        self.studyTable = db[table]
 
     def insert_to_db(self, userDict):
         if not bool(userDict):
