@@ -62,8 +62,8 @@ def run_discord_bot():
             pass
 
         printMsg = ""
-        botSet.waitTime = 6
-        # botSet.waitTime = 24 * 60 * 60
+        # botSet.waitTime = 6
+        botSet.waitTime = 24 * 60 * 60
 
     async def run_msg():
         await process_users_message()
@@ -85,8 +85,8 @@ def run_discord_bot():
         log.write_into_log(printMsg)
         hours = datetime.now().hour
         mins = datetime.now().minute
-        # botSet.waitTime = ((24-hours+6)*60 + (59-mins)) *24
-        botSet.waitTime = 6
+        botSet.waitTime = ((24-hours+6)*60 + (59-mins)) *24
+        # botSet.waitTime = 6
         # kick in the check in
         loop = asyncio.get_event_loop()
         try:
