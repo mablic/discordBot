@@ -18,7 +18,7 @@ User can customize the records with a 'tag' which will be graphed by the Bot in 
  - Discord
  
 
-**Key Features**
+##Key Features
 
 
  - STUDY ROOM
