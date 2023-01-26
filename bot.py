@@ -114,6 +114,7 @@ def run_discord_bot():
             printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " check-in."
             # print(f"Channel: {msgChannel} user: {userName} speak at the check-in.")
             checkControl.add_user(message.channel.id, userID, userName)
+            log.write_into_log(printMsg)
         elif userMessage and userMessage[0] == '-':
             if '-get date' in userMessage:
                 m = re.compile(r'(-get date)\s?([0-9]{4}-[0-9]{2}-[0-9]{2})')
