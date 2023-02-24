@@ -1,11 +1,1 @@
 Discord Bot Log Below:2023-01-07 10:37:11: bot is now running2023-02-23 22:04:29: bot is now running
-2023-02-23 22:04:32: mablic#4320 from channel mock-interview send message for public: -help
-2023-02-23 22:06:18: bot is now running
-2023-02-23 22:06:20: mablic#4320 from channel mock-interview send message for public: -help
-2023-02-23 22:06:40: mablic#4320 mock interview BQ: Tell me about a time when you had to handle a situation that required you to work with a tight deadline.
-2023-02-23 22:06:47: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/numbers-with-same-consecutive-differences/
-2023-02-23 22:06:54: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/fibonacci-number/
-2023-02-23 22:07:03: mablic#4320 from channel mock-interview get date: 2023-02-23
-2023-02-23 22:08:07: bot is now running
-
-2023-02-23 22:08:22: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/soup-servings/
