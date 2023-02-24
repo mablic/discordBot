@@ -73,7 +73,7 @@ Overall, this bot will be a helpful tool for users who want to track their study
  - -get date OPTIONAL1: get the date's data via pie chart
 
 
-**Example Chart**
+## Example Chart
 
 Example of the Line Chart
 
