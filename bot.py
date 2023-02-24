@@ -144,18 +144,18 @@ def run_discord_bot():
                 if 'mock-interview' in message.channel.name:
                     # get the question type
                     m = re.compile(r'-interview (bq|code)\s?(\w*)')
-                    print(f"user massge is: {userMessage}")
+                    # print(f"user massge is: {userMessage}")
                     try:
                         interViewType = m.match(userMessage)[1]
-                        print(f"interview Type {interViewType}")
+                        # print(f"interview Type {interViewType}")
                         if interViewType.lower() == 'bq':
-                            print(f"BQ questions {interViewType}")
+                            # print(f"BQ questions {interViewType}")
                             newInterview = interview.Interview()
                             question = newInterview.get_bp_questions()
                             printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " mock interview BQ: " + question
                             await send_message(message, question, is_private=False)
                         elif interViewType.lower() == 'code':
-                            print(f"CODE questions {interViewType}")
+                            # print(f"CODE questions {interViewType}")
                             try:
                                 questionType = m.match(userMessage)[2]
                                 question = botControl.get_linkCode_question(questionType)
@@ -169,7 +169,7 @@ def run_discord_bot():
                             pass
                     except Exception as e:
                         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " mock interview NO TYPE: " + userMessage
-                        await send_message(message, "Please specific your interview request (dp, code)?", is_private=True)
+                        await send_message(message, "Please specific your interview request (bq, code)?", is_private=False)
                     finally:
                         pass
                 else:
@@ -255,7 +255,7 @@ def run_discord_bot():
                 await member.send("Start Timing! (Use -tag [XX your Tag] to add your focus.)")
             if 'Mock Interview' in str(after.channel.name):
                 botControl.add_user(str(member.id))
-                botControl.add_tag(member.id, "Mock Interview")
+                botControl.add_tag(str(member.id), "Mock Interview")
                 await member.send("Start Timing for the Mock Interview!")
         else:
             if before.channel is not None:
