@@ -8,6 +8,7 @@ import asyncio
 import checkIn
 import syncBot
 import nest_asyncio
+import interview
 
 from datetime import datetime
 from discord.utils import find
@@ -104,7 +105,6 @@ def run_discord_bot():
         userName = str(message.author)
         userMessage = str(message.content)
         msgChannel = str(message.channel)
-        # msgGuild = message.guild 
         userID = str(message.author.id)
         dmChannel = await message.author.create_dm()
 
@@ -139,6 +139,41 @@ def run_discord_bot():
                     printMsg = printMsg + " No Data Found!"
                 finally:
                     pass
+            # this is for the mock interview
+            elif '-interview' in userMessage:
+                if 'mock-interview' in message.channel.name:
+                    # get the question type
+                    m = re.compile(r'-interview (bq|code)\s?(\w*)')
+                    print(f"user massge is: {userMessage}")
+                    try:
+                        interViewType = m.match(userMessage)[1]
+                        print(f"interview Type {interViewType}")
+                        if interViewType.lower() == 'bq':
+                            print(f"BQ questions {interViewType}")
+                            newInterview = interview.Interview()
+                            question = newInterview.get_bp_questions()
+                            printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " mock interview BQ: " + question
+                            await send_message(message, question, is_private=False)
+                        elif interViewType.lower() == 'code':
+                            print(f"CODE questions {interViewType}")
+                            try:
+                                questionType = m.match(userMessage)[2]
+                                question = botControl.get_linkCode_question(questionType)
+                            except Exception as e:
+                                question = botControl.get_linkCode_question('all')
+                            finally:
+                                pass
+                            printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " mock interview CODE ALL: " + question
+                            await send_message(message, question, is_private=False)
+                        else:
+                            pass
+                    except Exception as e:
+                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " mock interview NO TYPE: " + userMessage
+                        await send_message(message, "Please specific your interview request (dp, code)?", is_private=True)
+                    finally:
+                        pass
+                else:
+                    await send_message(message, 'Please use the Mock Interview Voice channel for the interview mock', is_private=False)
             elif message.channel.id == dmChannel.id:
                 if '-tag' in userMessage:
                     try:
@@ -196,7 +231,7 @@ def run_discord_bot():
                 else:
                     if userMessage and userMessage[0] == '-':
                         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " send message: " + userMessage
-                        await send_message(message, userMessage, is_private=False)
+                        # await send_message(message, userMessage, is_private=False)
             else:
                 # print(f"PRIVATE: {userName} said '{userMessage}' ({msgChannel})")
                 if '-private' in userMessage:
@@ -218,10 +253,14 @@ def run_discord_bot():
                 # print(f" {member.name} join the: {str(after.channel.name)} ")
                 botControl.add_user(str(member.id))
                 await member.send("Start Timing! (Use -tag [XX your Tag] to add your focus.)")
+            if 'Mock Interview' in str(after.channel.name):
+                botControl.add_user(str(member.id))
+                botControl.add_tag(member.id, "Mock Interview")
+                await member.send("Start Timing for the Mock Interview!")
         else:
             if before.channel is not None:
                 # print(f" {member.name} left the: {str(before.channel.name)} ")
-                if 'Study Room' in str(before.channel.name):
+                if 'Study Room' in str(before.channel.name) or 'Mock Interview' in str(before.channel.name):
                     if botControl.remove_user(str(member.id)):
                         await member.send("Finished Timing! (Use -get graph [Interval] [Chart Type] to see your data.)")
                     else:

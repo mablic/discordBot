@@ -1,20 +1,11 @@
-Discord Bot Log Below:2023-01-07 10:37:11: bot is now running
-2023-01-25 11:25:57: bot is now running
-2023-01-25 11:25:57: Bot start waiting 6. End at 2023-01-25 11:26:03.  Push to the DB!
-2023-01-25 11:26:16: Bot start waiting 6. End at 2023-01-25 11:26:22.  Push to the DB!
-2023-01-25 11:26:31: mablic#4320 from channel general send message for public: -get graph day bar
-2023-01-25 11:27:01: mablic#4320 get graph: (interval: day) (chartType: bar)
-2023-01-25 11:27:06: mablic#4320 from channel Direct Message with Unknown User get date: 2023-01-25
-2023-01-25 11:27:16: mablic#4320 send message: -help
-2023-01-25 11:27:21: mablic#4320 send message: -roll
-2023-01-25 17:33:03: bot is now running
-2023-01-25 17:39:39: bot is now running
-2023-01-25 17:39:41: mablic#4320 send message: -help
-2023-01-25 17:40:53: bot is now running
-2023-01-25 17:40:54: mablic#4320 send message: -help
-2023-01-25 17:41:35: bot is now running
-2023-01-25 17:41:35: mablic#4320 send message: -help
-2023-01-25 17:43:13: bot is now running
-2023-01-25 17:43:14: mablic#4320 send message: -help
-2023-01-25 17:44:52: bot is now running
-2023-01-25 17:44:56: mablic#4320 send message: -help
+Discord Bot Log Below:2023-01-07 10:37:11: bot is now running2023-02-23 22:04:29: bot is now running
+2023-02-23 22:04:32: mablic#4320 from channel mock-interview send message for public: -help
+2023-02-23 22:06:18: bot is now running
+2023-02-23 22:06:20: mablic#4320 from channel mock-interview send message for public: -help
+2023-02-23 22:06:40: mablic#4320 mock interview BQ: Tell me about a time when you had to handle a situation that required you to work with a tight deadline.
+2023-02-23 22:06:47: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/numbers-with-same-consecutive-differences/
+2023-02-23 22:06:54: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/fibonacci-number/
+2023-02-23 22:07:03: mablic#4320 from channel mock-interview get date: 2023-02-23
+2023-02-23 22:08:07: bot is now running
+
+2023-02-23 22:08:22: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/soup-servings/

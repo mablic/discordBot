@@ -17,6 +17,7 @@ class Control:
 
     def __init__(self) -> None:
         self.DB = mongoDB.MongoDB()
+        self.InterviewDB = mongoDB.MongoDB()
         self.timer = timer.Timer()
         self.graph = graph.Graph()
     
@@ -58,6 +59,15 @@ class Control:
             raise TypeError("No user found!")
         return data
 
+    def connect_to_interview_db(self):
+        try:
+            self.InterviewDB.connect_to_db('studyDB', 'dashboard_leetcode')
+        except ValueError as e:
+            raise
+        except Exception as e:
+            print(f"Error when connect to the interview database")
+            raise TypeError("Interview database not found!")
+
     def get_data_details(self, userName):
         try:
             data = self.connect_to_db(userName)
@@ -88,6 +98,11 @@ class Control:
         else:
             return self.graph.get_graph(df, userName, interval, graphType)
 
+    def get_linkCode_question(self, type='all'):
+        self.connect_to_interview_db()
+        type = type[0].upper() + type[1:]
+        return self.InterviewDB.find_all_data_from_db('hardType', type)
+
     def remove_file(self, filePath):
         self.graph.remove_file(filePath)
 
@@ -95,7 +110,8 @@ class Control:
         pass
 
 if __name__ == '__main__':
-    pass
-    # m = Control()
+    # pass
+    m = Control()
+    print(m.get_linkCode_question('easy'))
     # print(m.get_data_graph('482041455360344064', 'pie', 'day', '2022-01-17'))
     # m.get_data_graph('482041455360344064', 'pie', 'day')

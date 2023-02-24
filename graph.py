@@ -85,7 +85,6 @@ class Graph:
         m = re.compile(r'[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}')
         if not m.match(day):
             day = datetime.strftime(datetime.now(), self.dataDateFormat)
-
         try:
             df.fillna(0)
             columns = df.columns.values.tolist()
@@ -94,6 +93,10 @@ class Graph:
         except Exception as e:
             print(f"Keys {day} error with message: {str(e)}.")
             return "No data found!"
+
+        for key in df.keys():
+            if int(df[key]) == 0:
+                df.drop(index=key, inplace=True)
 
         labels = list(df.keys())
         sizes = df.tolist()
@@ -114,16 +117,28 @@ class Graph:
 if __name__ == '__main__':
     
     pass
-    # df = pd.DataFrame({'studyTime': ['01/02/2022', '01/04/2022','01/03/2022', '01/04/2022','01/04/2022'],'FRM': [380, 370, 24, 26,21], 'CFA': [np.nan, 370, np.nan, 26,18], 'CPA': [12, 45, 32, 41,5]})
+    # df = pd.DataFrame({'studyTime': ['01/02/2022', '01/04/2022','01/03/2022', '01/04/2022','01/04/2022'],
+    #     'FRM': [380, 370, 24, 26,21], 'CFA': [np.nan, 370, np.nan, 26,18], 
+    #     'CPA': [12, 45, 32, 41,5], 'CIP': [0, 0, 0, 0, 0], 'MVP': [0, 0, 0, 0, 0]})
     # df.fillna(0)
     # columns = df.columns.values.tolist()
     # df = df.groupby('studyTime')[columns].sum()
     # df = df.loc['01/04/2022']
-    # print(df)
+
+    # # check if the sum of each column is equal to 0
+    # # col_sum = np.sum(df, axis=0)
+    # # df = df[:, col_sum != 0]
+
+    # for key in df.keys():
+    #     if int(df[key]) == 0:
+    #         print(f"Drop key {key}")
+    #         df.drop(index=key, inplace=True)
 
     # labels = list(df.keys())
     # sizes = df.tolist()
+    # print(f"DF is {df}")
     # explode = tuple([0.1 if x==max(sizes) else 0 for x in sizes])
+    # print(f"Explode is {explode}")
 
     # fig1, ax1 = plt.subplots()
     # ax1.pie(sizes, explode=explode, labels=labels, autopct=lambda pct: func(pct, sizes),

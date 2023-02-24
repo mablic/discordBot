@@ -1,4 +1,5 @@
 import pymongo
+import random
 import certifi
 import os
 import sys
@@ -43,7 +44,19 @@ class MongoDB:
 
     def find_data_from_db(self, userName):
         return self.studyTable.find({'userName': userName})
-    
+
+    def find_all_data_from_db(self, field1 = '', filter= ''):
+        print(field1 + ' ' + filter)
+        if filter == 'All':
+            curSor = self.studyTable.find()
+        else:
+            curSor = self.studyTable.find({field1: filter})
+        ret = []
+        for cur in curSor:
+            ret.append(dict(cur))
+        res = ret[random.randint(1, len(ret))]
+        return res['link']
+
     def get_my_tags(self, userName):
         pass
 
@@ -64,3 +77,6 @@ if __name__ == '__main__':
     # for index, row in res.iterrows():
     #     nList = str(index) + ';' + ';'.join([str(x) for x in row])
     #     print(nList)
+    # M = MongoDB()
+    # M.connect_to_db('studyDB', 'dashboard_leetcode')
+    # print(f"Get one easy question: {M.find_all_data_from_db('hardType','All')}")
