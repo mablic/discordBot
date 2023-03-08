@@ -120,6 +120,10 @@ Example of the Pie Chart
     - Randomly interview question for users
     - Bugs fix
 
+ - Beta v0.6:
+    - New function for the scheduler, now the Bot can send reminder to the user
+    - Bugs fix
+
 ## Authors
 
 
