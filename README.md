@@ -42,6 +42,11 @@ Overall, this bot will be a helpful tool for users who want to track their study
      - Message back to the 'check-in' Channel daily at 5:00 AM CST with list of checked members
      - A world for blessing comes with the check message from the Bot
      - Checked data will be saved to the database daily
+
+ - SCHEDULER  
+     - Watch any Discord Text Channels with key world 'scheduler'
+     - Customizable message to notified user to check-in in on the CHECK IN channel
+     - Reminder to the user every hour if not CHECKED IN
      
  - PRESENTATION
      - Presentation the 'tag' and 'time' with LINE chart, PIE chart and HISTOGRAM chart
@@ -58,6 +63,9 @@ Overall, this bot will be a helpful tool for users who want to track their study
  - -hi or -hello: say hi to the Bot
  - -roll: roll a dice between 1 and 100
  - -tag XXX: tag the time with customize focus
+ - -scheduler XXX XXX: reminder setup with the bot
+    - REQUIRED: 0-23 in hours
+    - OPTIONAL: A custom message to notify user check in
  - -interview REQUIRED OPTIONAL: generate an interview question
     - REQUIRED: 
       - bq: Behavior question
