@@ -11,6 +11,7 @@ class SyncBot:
     def __init__(self):
         self._botWait = 0
         self._waitTime = 1
+        self._notifyTime = 1
 
     @property
     def botWait(self):
@@ -28,3 +29,11 @@ class SyncBot:
     def waitTime(self, val):
         if isinstance(val, int):
             self._waitTime = val
+    
+    @property
+    def notifyTime(self):
+        return self._notifyTime
+    
+    @notifyTime.setter
+    def notifyTime(self, val):
+        self._notifyTime = val

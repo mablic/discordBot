@@ -8,14 +8,13 @@ def handle_response(message):
     if '-hello' in message or '-hi' in message:
         return 'Sup?'
     if '-help' in message:
-        response ="-----------------------------------------Function-----------------------------------------\n\n"
-        response += "Bot will display the study records from the Study Room with line or bar chat\n"
-        response += "Mock interview with 100+ common behavior questions\n"
-        response += "Bot will send (7am cst) the 'fortune' by users no the check-in Channel if any users 'check in' within the day\n\n"
         response +="-----------------------------------------Controls-----------------------------------------\n\n"
         response += "Help Menu..\nMessage bot with prefix '-'\n\n"
         response += "-roll: roll a dice from between 1 and 100\n"
         response += "-help: help menu\n"
+        response += "-scheduler REQUIRED(1-24) OPTIONAL(Message): schedule a reminder with the bot in the scheduler text channel\n"
+        response += "   REQUIRED(1-24): send the reminder at the hours (24 format in CST)\n"
+        response += "   OPTIONAL(Type): custom message if any, otherwise:妈妈喊你打卡啦！\n"
         response += "-interview REQUIRED(bq/code) OPTIONAL(Type): generate a random interview question in the mock-interview text channel\n"
         response += "   REQUIRED(bq/code)\n"
         response += "       bq:     behavior questions\n"

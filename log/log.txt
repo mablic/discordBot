@@ -4,3 +4,229 @@ Discord Bot Log Below:2023-01-07 10:37:11: bot is now running2023-02-23 22:04:29
 2023-02-24 08:30:14: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/target-sum/
 2023-02-24 08:30:27: mablic#4320 mock interview CODE ALL: https://leetcode.com/problems/distance-between-bus-stops/
 2023-02-24 08:30:30: mablic#4320 from channel mock-interview get date: 2023-02-24 No Data Found!
+2023-03-07 20:33:22: bot is now running
+2023-03-07 20:33:28: Schedulermablic#4320 Channel: scheduler FAIL. Mssage:-scheduler 9 123
+2023-03-07 20:40:19: bot is now running
+2023-03-07 20:40:38: mablic#4320 scheduler: -scheduler 10 妈妈喊我吃饭了
+2023-03-07 23:16:33: bot is now running
+2023-03-07 23:17:52: bot is now running
+2023-03-07 23:20:49: bot is now running
+2023-03-07 23:22:32: bot is now running
+2023-03-07 23:28:51: bot is now running
+2023-03-07 23:32:05: bot is now running
+2023-03-07 23:34:33: bot is now running
+2023-03-07 23:36:01: bot is now running
+2023-03-07 23:37:52: bot is now running
+2023-03-07 23:42:42: bot is now running
+2023-03-07 23:44:34: bot is now running
+2023-03-07 23:45:58: bot is now running
+2023-03-07 23:48:01: bot is now running
+2023-03-07 23:53:50: bot is now running
+2023-03-08 09:28:55: bot is now running
+2023-03-08 09:30:53: bot is now running
+2023-03-08 09:31:02: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 1 我要学习
+2023-03-08 09:31:12: SchedulerMablic-Bot#6146 Channel: scheduler ADD. Mssage:-scheduler 2
+2023-03-08 09:31:54: Schedulermablic#4320 Channel: scheduler REMOVED. Mssage:-scheduler remove
+2023-03-08 09:35:36: bot is now running
+2023-03-08 09:35:53: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 5 我是好孩子
+2023-03-08 09:36:14: mablic#4320 from channel check-in check-in.
+2023-03-08 09:39:51: bot is now running
+2023-03-08 09:40:10: mablic#4320 from channel check-in check-in.
+2023-03-08 09:45:23: bot is now running
+2023-03-08 09:45:32: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 09:47:27: bot is now running
+2023-03-08 09:47:37: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 09:51:13: bot is now running
+2023-03-08 09:51:21: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 09:54:23: bot is now running
+2023-03-08 09:54:31: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 09:56:15: bot is now running
+2023-03-08 09:56:24: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 09:57:02: bot is now running
+2023-03-08 09:57:18: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 09:59:00: bot is now running
+2023-03-08 09:59:12: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 10:02:28: bot is now running
+2023-03-08 10:30:05: bot is now running
+2023-03-08 10:30:15: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 10:31:22: bot is now running
+2023-03-08 10:31:38: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 10:33:53: bot is now running
+2023-03-08 10:34:01: bot is now running
+2023-03-08 10:34:09: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 10:35:03: bot is now running
+2023-03-08 10:35:07: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 12:29:06: bot is now running
+2023-03-08 12:29:22: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 12:29:26: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 12:30:50: mablic#4320 from channel check-in check-in.
+2023-03-08 12:37:57: bot is now running
+2023-03-08 12:38:23: bot is now running
+2023-03-08 12:38:49: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 12 我要学习了
+2023-03-08 12:39:16: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 12:39:41: SchedulerMablic-Bot#6146 Channel: scheduler REMOVED. Mssage:-scheduler remove
+2023-03-08 12:50:53: bot is now running
+2023-03-08 12:50:53: Bot start scheduler 60. End at 2023-03-08 12:50:59. 
+2023-03-08 12:51:22: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 12
+2023-03-08 12:52:57: bot is now running
+2023-03-08 12:52:57: Bot start scheduler 60. End at 2023-03-08 12:53:03. 
+2023-03-08 12:53:03: Bot start scheduler 60. End at 2023-03-08 12:53:09. 
+2023-03-08 12:53:09: Bot start scheduler 60. End at 2023-03-08 12:53:14. 
+2023-03-08 12:53:14: Bot start scheduler 60. End at 2023-03-08 12:53:20. 
+2023-03-08 12:53:20: Bot start scheduler 60. End at 2023-03-08 12:53:26. 
+2023-03-08 12:53:30: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 12:53:26: Bot start scheduler 60. End at 2023-03-08 12:53:32. 
+2023-03-08 12:53:32: Bot start scheduler 60. End at 2023-03-08 12:53:37. 
+2023-03-08 12:53:38: Bot start scheduler 60. End at 2023-03-08 12:53:43. 
+2023-03-08 12:53:43: Bot start scheduler 60. End at 2023-03-08 12:53:49. 
+2023-03-08 12:53:49: Bot start scheduler 60. End at 2023-03-08 12:53:54. 
+2023-03-08 12:52:57: Bot start waiting 60. End at 2023-03-08 12:53:57.  Push to the DB!
+2023-03-08 12:53:55: Bot start scheduler 60. End at 2023-03-08 12:54:00. 
+2023-03-08 12:54:01: Bot start scheduler 60. End at 2023-03-08 12:54:06. 
+2023-03-08 12:54:06: Bot start scheduler 60. End at 2023-03-08 12:54:12. 
+2023-03-08 12:54:12: Bot start scheduler 60. End at 2023-03-08 12:54:18. 
+2023-03-08 12:54:18: Bot start scheduler 60. End at 2023-03-08 12:54:24. 
+2023-03-08 12:54:24: Bot start scheduler 60. End at 2023-03-08 12:54:30. 
+2023-03-08 12:54:30: Bot start scheduler 60. End at 2023-03-08 12:54:36. 
+2023-03-08 12:54:36: Bot start scheduler 60. End at 2023-03-08 12:54:41. 
+2023-03-08 12:54:42: Bot start scheduler 60. End at 2023-03-08 12:54:47. 
+2023-03-08 12:54:47: Bot start scheduler 60. End at 2023-03-08 12:54:53. 
+2023-03-08 12:54:56: Schedulermablic#4320 Channel: scheduler REMOVED. Mssage:-scheduler remove
+2023-03-08 12:54:53: Bot start scheduler 60. End at 2023-03-08 12:54:59. 
+2023-03-08 12:54:59: Bot start scheduler 60. End at 2023-03-08 12:55:04. 
+2023-03-08 12:55:04: Bot start scheduler 60. End at 2023-03-08 12:55:10. 
+2023-03-08 12:55:10: Bot start scheduler 60. End at 2023-03-08 12:55:15. 
+2023-03-08 12:55:15: Bot start scheduler 60. End at 2023-03-08 12:55:21. 
+2023-03-08 12:55:23: mablic#4320 from channel check-in check-in.
+2023-03-08 12:55:21: Bot start scheduler 60. End at 2023-03-08 12:55:27. 
+2023-03-08 12:55:27: Bot start scheduler 60. End at 2023-03-08 12:55:32. 
+2023-03-08 12:55:32: Bot start scheduler 60. End at 2023-03-08 12:55:38. 
+2023-03-08 12:55:38: Bot start scheduler 60. End at 2023-03-08 12:55:43. 
+2023-03-08 12:55:43: Bot start scheduler 60. End at 2023-03-08 12:55:49. 
+2023-03-08 12:55:49: Bot start scheduler 60. End at 2023-03-08 12:55:54. 
+2023-03-08 12:55:54: Bot start scheduler 60. End at 2023-03-08 12:56:00. 
+2023-03-08 12:56:00: Bot start scheduler 60. End at 2023-03-08 12:56:06. 
+2023-03-08 12:56:06: Bot start scheduler 60. End at 2023-03-08 12:56:11. 
+2023-03-08 12:56:11: Bot start scheduler 60. End at 2023-03-08 12:56:17. 
+2023-03-08 12:56:17: Bot start scheduler 60. End at 2023-03-08 12:56:22. 
+2023-03-08 12:56:22: Bot start scheduler 60. End at 2023-03-08 12:56:28. 
+2023-03-08 12:56:28: Bot start scheduler 60. End at 2023-03-08 12:56:33. 
+2023-03-08 12:56:33: Bot start scheduler 60. End at 2023-03-08 12:56:39. 
+2023-03-08 12:56:39: Bot start scheduler 60. End at 2023-03-08 12:56:45. 
+2023-03-08 12:56:45: Bot start scheduler 60. End at 2023-03-08 12:56:50. 
+2023-03-08 12:56:50: Bot start scheduler 60. End at 2023-03-08 12:56:56. 
+2023-03-08 12:56:56: Bot start scheduler 60. End at 2023-03-08 12:57:01. 
+2023-03-08 12:57:01: Bot start scheduler 60. End at 2023-03-08 12:57:07. 
+2023-03-08 12:57:07: Bot start scheduler 60. End at 2023-03-08 12:57:12. 
+2023-03-08 12:57:12: Bot start scheduler 60. End at 2023-03-08 12:57:18. 
+2023-03-08 12:57:18: Bot start scheduler 60. End at 2023-03-08 12:57:24. 
+2023-03-08 12:57:24: Bot start scheduler 60. End at 2023-03-08 12:57:29. 
+2023-03-08 12:57:29: Bot start scheduler 60. End at 2023-03-08 12:57:35. 
+2023-03-08 12:57:35: Bot start scheduler 60. End at 2023-03-08 12:57:40. 
+2023-03-08 12:57:40: Bot start scheduler 60. End at 2023-03-08 12:57:46. 
+2023-03-08 12:57:46: Bot start scheduler 60. End at 2023-03-08 12:57:52. 
+2023-03-08 12:57:52: Bot start scheduler 60. End at 2023-03-08 12:57:58. 
+2023-03-08 12:57:58: Bot start scheduler 60. End at 2023-03-08 12:58:03. 
+2023-03-08 12:58:03: Bot start scheduler 60. End at 2023-03-08 12:58:09. 
+2023-03-08 12:58:10: Mablic-Bot#6146 from channel check-in check-in.
+2023-03-08 12:58:09: Bot start scheduler 60. End at 2023-03-08 12:58:15. 
+2023-03-08 12:58:15: Bot start scheduler 60. End at 2023-03-08 12:58:20. 
+2023-03-08 12:58:20: Bot start scheduler 60. End at 2023-03-08 12:58:26. 
+2023-03-08 12:58:26: Bot start scheduler 60. End at 2023-03-08 12:58:32. 
+2023-03-08 12:58:32: Bot start scheduler 60. End at 2023-03-08 12:58:37. 
+2023-03-08 12:58:37: Bot start scheduler 60. End at 2023-03-08 12:58:43. 
+2023-03-08 12:58:43: Bot start scheduler 60. End at 2023-03-08 12:58:48. 
+2023-03-08 12:58:48: Bot start scheduler 60. End at 2023-03-08 12:58:54. 
+2023-03-08 12:58:54: Bot start scheduler 60. End at 2023-03-08 12:59:00. 
+2023-03-08 12:59:00: Bot start scheduler 60. End at 2023-03-08 12:59:05. 
+2023-03-08 12:59:05: Bot start scheduler 60. End at 2023-03-08 12:59:11. 
+2023-03-08 12:59:11: Bot start scheduler 60. End at 2023-03-08 12:59:16. 
+2023-03-08 12:59:16: Bot start scheduler 60. End at 2023-03-08 12:59:22. 
+2023-03-08 12:59:22: Bot start scheduler 60. End at 2023-03-08 12:59:27. 
+2023-03-08 12:59:27: Bot start scheduler 60. End at 2023-03-08 12:59:33. 
+2023-03-08 12:59:33: Bot start scheduler 60. End at 2023-03-08 12:59:38. 
+2023-03-08 12:59:38: Bot start scheduler 60. End at 2023-03-08 12:59:44. 
+2023-03-08 12:59:44: Bot start scheduler 60. End at 2023-03-08 12:59:50. 
+2023-03-08 12:59:50: Bot start scheduler 60. End at 2023-03-08 12:59:55. 
+2023-03-08 15:36:36: bot is now running
+2023-03-08 15:36:41: Bot start scheduler 5. End at 2023-03-08 15:36:41. 
+2023-03-08 15:36:46: Bot start scheduler 5. End at 2023-03-08 15:36:47. 
+2023-03-08 15:36:52: Bot start scheduler 5. End at 2023-03-08 15:36:52. 
+2023-03-08 15:36:57: Bot start scheduler 5. End at 2023-03-08 15:36:58. 
+2023-03-08 15:37:03: Bot start scheduler 5. End at 2023-03-08 15:37:03. 
+2023-03-08 15:37:08: Bot start scheduler 5. End at 2023-03-08 15:37:09. 
+2023-03-08 15:37:14: Bot start scheduler 5. End at 2023-03-08 15:37:14. 
+2023-03-08 15:37:19: Bot start scheduler 5. End at 2023-03-08 15:37:20. 
+2023-03-08 15:37:25: Bot start scheduler 5. End at 2023-03-08 15:37:26. 
+2023-03-08 15:37:31: Bot start scheduler 5. End at 2023-03-08 15:37:31. 
+2023-03-08 15:37:36: Bot start scheduler 5. End at 2023-03-08 15:37:37. 
+2023-03-08 15:37:42: Bot start scheduler 5. End at 2023-03-08 15:37:42. 
+2023-03-08 15:37:47: Bot start scheduler 5. End at 2023-03-08 15:37:48. 
+2023-03-08 15:37:53: Bot start scheduler 5. End at 2023-03-08 15:37:53. 
+2023-03-08 15:37:58: Bot start scheduler 5. End at 2023-03-08 15:37:59. 
+2023-03-08 15:40:51: bot is now running
+2023-03-08 15:40:56: Bot start scheduler 5. End at 2023-03-08 15:40:56. 
+2023-03-08 15:41:01: Bot start scheduler 5. End at 2023-03-08 15:41:02. 
+2023-03-08 15:41:07: Bot start scheduler 5. End at 2023-03-08 15:41:07. 
+2023-03-08 15:41:12: Bot start scheduler 5. End at 2023-03-08 15:41:13. 
+2023-03-08 15:41:18: Bot start scheduler 5. End at 2023-03-08 15:41:18. 
+2023-03-08 15:41:23: Bot start scheduler 5. End at 2023-03-08 15:41:24. 
+2023-03-08 15:41:29: Bot start scheduler 5. End at 2023-03-08 15:41:29. 
+2023-03-08 15:41:34: Bot start scheduler 5. End at 2023-03-08 15:41:35. 
+2023-03-08 15:41:40: Bot start scheduler 5. End at 2023-03-08 15:41:41. 
+2023-03-08 15:41:46: Bot start scheduler 5. End at 2023-03-08 15:41:46. 
+2023-03-08 15:41:51: Bot start scheduler 5. End at 2023-03-08 15:41:52. 
+2023-03-08 15:41:57: Bot start scheduler 5. End at 2023-03-08 15:41:57. 
+2023-03-08 15:42:02: Bot start scheduler 5. End at 2023-03-08 15:42:03. 
+2023-03-08 15:42:08: Bot start scheduler 5. End at 2023-03-08 15:42:08. 
+2023-03-08 15:42:13: Bot start scheduler 5. End at 2023-03-08 15:42:14. 
+2023-03-08 15:42:19: Bot start scheduler 5. End at 2023-03-08 15:42:20. 
+2023-03-08 15:42:25: Bot start scheduler 5. End at 2023-03-08 15:42:25. 
+2023-03-08 15:42:30: Bot start scheduler 5. End at 2023-03-08 15:42:31. 
+2023-03-08 15:42:36: Bot start scheduler 5. End at 2023-03-08 15:42:36. 
+2023-03-08 15:42:41: Bot start scheduler 5. End at 2023-03-08 15:42:42. 
+2023-03-08 15:42:47: Bot start scheduler 5. End at 2023-03-08 15:42:47. 
+2023-03-08 15:43:08: bot is now running
+2023-03-08 15:43:50: Bot start scheduler 5. End at 2023-03-08 15:43:51. 
+2023-03-08 15:57:46: bot is now running
+2023-03-08 15:59:01: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 9 我要学习
+2023-03-08 15:58:59: Bot start scheduler 5. End at 2023-03-08 15:59:04. 
+2023-03-08 15:59:04: Bot start scheduler 5. End at 2023-03-08 15:59:10. 
+2023-03-08 15:59:11: Bot start scheduler 5. End at 2023-03-08 15:59:16. 
+2023-03-08 15:59:16: Bot start scheduler 5. End at 2023-03-08 15:59:22. 
+2023-03-08 15:59:22: Bot start scheduler 5. End at 2023-03-08 15:59:28. 
+2023-03-08 15:59:28: Bot start scheduler 5. End at 2023-03-08 15:59:33. 
+2023-03-08 15:59:34: Bot start scheduler 5. End at 2023-03-08 15:59:39. 
+2023-03-08 16:01:05: bot is now running
+2023-03-08 16:01:34: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 9
+2023-03-08 16:02:19: bot is now running
+2023-03-08 16:02:19: Bot start scheduler 5. End at 2023-03-08 16:02:25. 
+2023-03-08 16:02:25: Bot start scheduler 5. End at 2023-03-08 16:02:31. 
+2023-03-08 16:02:31: Bot start scheduler 5. End at 2023-03-08 16:02:37. 
+2023-03-08 16:02:37: Bot start scheduler 5. End at 2023-03-08 16:02:42. 
+2023-03-08 16:02:43: Bot start scheduler 5. End at 2023-03-08 16:02:48. 
+2023-03-08 16:02:48: Bot start scheduler 5. End at 2023-03-08 16:02:54. 
+2023-03-08 16:02:54: Bot start scheduler 5. End at 2023-03-08 16:03:00. 
+2023-03-08 16:03:00: Bot start scheduler 5. End at 2023-03-08 16:03:05. 
+2023-03-08 16:03:42: bot is now running
+2023-03-08 16:03:42: Bot start scheduler 5. End at 2023-03-08 16:03:48. 
+2023-03-08 16:03:48: Bot start scheduler 5. End at 2023-03-08 16:03:53. 
+2023-03-08 16:03:54: Bot start scheduler 5. End at 2023-03-08 16:03:59. 
+2023-03-08 16:19:09: bot is now running
+2023-03-08 16:19:09: Bot start scheduler 5. End at 2023-03-08 16:19:15. 
+2023-03-08 16:19:20: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 10 贴
+2023-03-08 16:19:15: Bot start scheduler 5. End at 2023-03-08 16:19:22. 
+2023-03-08 16:19:22: Bot start scheduler 5. End at 2023-03-08 16:19:28. 
+2023-03-08 16:19:28: Bot start scheduler 5. End at 2023-03-08 16:19:34. 
+2023-03-08 16:19:34: Bot start scheduler 5. End at 2023-03-08 16:19:40. 
+2023-03-08 16:21:36: bot is now running
+2023-03-08 16:21:52: Schedulermablic#4320 Channel: scheduler ADD. Mssage:-scheduler 9
+2023-03-08 16:23:54: bot is now running
+2023-03-08 16:25:24: bot is now running
+2023-03-08 16:25:24: Bot start scheduler 5. End at 2023-03-08 16:25:30. 
+2023-03-08 16:27:42: bot is now running
+2023-03-08 16:27:42: Bot start scheduler 5. End at 2023-03-08 16:27:48.  send message to mablic
+2023-03-08 16:27:48: Bot start scheduler 5. End at 2023-03-08 16:27:54.  send message to mablic
+2023-03-08 16:27:54: Bot start scheduler 5. End at 2023-03-08 16:27:59.  send message to mablic
+2023-03-08 16:28:00: Bot start scheduler 5. End at 2023-03-08 16:28:05.  send message to mablic
+2023-03-08 16:28:05: Bot start scheduler 5. End at 2023-03-08 16:28:11.  send message to mablic

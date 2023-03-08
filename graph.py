@@ -20,6 +20,7 @@ class Graph:
         self.dataDateFormat = '%Y-%m-%d'
         self.dateFormat = '%Y-%m-%d %H-%M-%S'
         self.filePath = ''
+        self.cCode = [key for key in mcolors.BASE_COLORS][:len(mcolors.BASE_COLORS)-1]
 
     def get_graph(self, df, userID='0', interval='day', type='line'):
 
@@ -40,7 +41,6 @@ class Graph:
         # print(df)
 
         fig, ax = plt.subplots()
-        cCode = [key for key in mcolors.BASE_COLORS]
         if type == 'line':
             # line graph
             # plt.figure(figsize=(5, 2.7), layout='constrained')
@@ -51,9 +51,9 @@ class Graph:
             width = 0.35
             for i in range(len(df.columns.tolist())):
                 if i == 0:
-                    ax.bar(df.index, df.iloc[:,i].tolist(), width, color=cCode[i], align = 'center', label=df.columns[i])
+                    ax.bar(df.index, df.iloc[:,i].tolist(), width, color=self.cCode[i%len(self.cCode)], align = 'center', label=df.columns[i])
                 else:
-                    ax.bar(df.index, df.iloc[:,i].tolist(), width, color=cCode[i], align = 'center', bottom=df.iloc[:,i-1], label=df.columns[i])
+                    ax.bar(df.index, df.iloc[:,i].tolist(), width, color=self.cCode[i%len(self.cCode)], align = 'center', bottom=df.iloc[:,i-1], label=df.columns[i])
                     df[columns[i+1]] = df[[columns[i], columns[i+1]]].values.max(1)
         else:
             type = 'line'
@@ -114,8 +114,24 @@ class Graph:
         plt.savefig(filename)
         return filename
 
+    def graph_check_in(self, data):
+        if not data:
+            return
+
+        data = sorted(data.items(), key=lambda x:x[1])
+        fig1, ax1 = plt.subplots()
+        
+        for i in range(len(data)):
+            ax1.barh(data[i][0], data[i][1], align='center', color=self.cCode[i%len(self.cCode)])
+            ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        plt.gcf().autofmt_xdate()
+        plt.title("Last Week Check-In")
+        plt.tight_layout()
+        filename = self.save_file('weekly', '')
+        plt.savefig(filename)
+        return filename
+
 if __name__ == '__main__':
-    
     pass
     # df = pd.DataFrame({'studyTime': ['01/02/2022', '01/04/2022','01/03/2022', '01/04/2022','01/04/2022'],
     #     'FRM': [380, 370, 24, 26,21], 'CFA': [np.nan, 370, np.nan, 26,18], 
@@ -148,4 +164,23 @@ if __name__ == '__main__':
     # plt.gcf().autofmt_xdate()
     # plt.legend()
     # plt.title("Study Summary")
+    # plt.show()
+
+    # data = {'mablic#4320': 31, 'Mablic-Bot#6146': 1, 'tumatu#8135': 27, 'scarletwang#0128': 4, 'Meiyu#7859': 17, 'lorena韵#1951': 2, 'lilmilkyy#3993': 1, 'uda#7893': 1, 'Pinglan#0889': 5, 'tamagosan#7196': 1, 'Sitong#0519': 8, 'Alizestl#4134': 1, 'reen#2668': 1, 'singingASongOfAngryMan#2735': 1}
+    # data = sorted(data.items(), key=lambda x:x[1])
+    # fig1, ax1 = plt.subplots()
+
+    # users= []
+    # count = []
+    # for key, value in data.items():
+    #     users.append(key)
+    #     count.append(value)
+    # cCode = [key for key in mcolors.BASE_COLORS][:len(mcolors.BASE_COLORS)-1]
+    # for i in range(len(data)):
+    #     ax1.barh(data[i][0], data[i][1], align='center', color=cCode[i%len(cCode)])
+    
+    #     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    # plt.gcf().autofmt_xdate()
+    # plt.title("Last Week Check-In")
+    # plt.tight_layout()
     # plt.show()

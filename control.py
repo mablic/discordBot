@@ -2,7 +2,6 @@ import mongoDB
 import timer
 import graph
 import pandas as pd
-import asyncio
 from datetime import datetime
 
 class Control:
@@ -17,7 +16,7 @@ class Control:
 
     def __init__(self) -> None:
         self.DB = mongoDB.MongoDB()
-        self.InterviewDB = mongoDB.MongoDB()
+        self.anyDB = mongoDB.MongoDB()
         self.timer = timer.Timer()
         self.graph = graph.Graph()
     
@@ -34,6 +33,20 @@ class Control:
             print(str(e))
             return False
         self.DB.insert_to_db(dict)
+        return True
+
+    def remove_notification(self, dict):
+        try:
+            self.anyDB.connect_to_db('studyDB', 'scheduler_notification')
+            self.anyDB.remove_historical_scheduler(dict)
+        except Exception as e:
+            print(str(e))
+        finally:
+            pass
+
+    def add_notification(self, dict):
+        self.remove_notification(dict)
+        self.anyDB.insert_to_db(dict)
         return True
 
     def remove_user(self, userId):
@@ -59,9 +72,10 @@ class Control:
             raise TypeError("No user found!")
         return data
 
-    def connect_to_interview_db(self):
+    #dashboard_leetcode
+    def connect_to_any_db(self, database):
         try:
-            self.InterviewDB.connect_to_db('studyDB', 'dashboard_leetcode')
+            self.anyDB.connect_to_db('studyDB', database) #'dashboard_leetcode')
         except ValueError as e:
             raise
         except Exception as e:
@@ -98,20 +112,31 @@ class Control:
         else:
             return self.graph.get_graph(df, userName, interval, graphType)
 
+    def get_check_in_graph(self, startDate, endDate):
+        data = self.DB.get_check_in_data(startDate, endDate)
+        self.graph.graph_check_in(data)
+
     def get_linkCode_question(self, type='all'):
-        self.connect_to_interview_db()
+        self.connect_to_any_db('dashboard_leetcode')
         type = type[0].upper() + type[1:]
-        return self.InterviewDB.find_all_data_from_db('hardType', type)
+        return self.anyDB.find_all_data_from_db('hardType', type)
 
     def remove_file(self, filePath):
         self.graph.remove_file(filePath)
+
+    def get_notification(self):
+        self.connect_to_any_db('scheduler_notification')
+        return self.anyDB.get_notification()
 
     def __del__(self):
         pass
 
 if __name__ == '__main__':
-    # pass
-    m = Control()
-    print(m.get_linkCode_question('easy'))
+    pass
+    # m = Control()
+    # m.get_check_in_graph('2023-02-20', '2023-02-26')
+    # newDict = {'userName':'mai','channelName':'123','time':'9','message':'妈妈', 'userId': '12312312'}
+    # print(m.get_notification())
+    # print(m.get_linkCode_question('easy'))
     # print(m.get_data_graph('482041455360344064', 'pie', 'day', '2022-01-17'))
     # m.get_data_graph('482041455360344064', 'pie', 'day')
