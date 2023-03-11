@@ -126,7 +126,7 @@ def run_discord_bot():
         log.write_into_log(printMsg)
         hours = datetime.now().hour
         mins = datetime.now().minute
-        botSet.waitTime = ((24-hours+6)*60 + (59-mins)) * 60
+        botSet.waitTime = ((24-hours)*60 + (59-mins)) * 60
         botSet.notifyTime = (59-mins) * 60
         # botSet.waitTime = 10
         # botSet.notifyTime = 5

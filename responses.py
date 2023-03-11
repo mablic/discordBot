@@ -45,6 +45,8 @@ def handle_response(message):
         return response
     if '-private' in message:
         return 'Sup?'
+    if '-' in message:
+        return "I don't understand this, please use -help to get more info."
 
-    return "I don't understand this, please use -help."
+    return message
         
