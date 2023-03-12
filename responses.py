@@ -1,6 +1,6 @@
 import random
 
-def handle_response(message):
+def handle_response(message, check):
 
     message = message.lower()
     if '-roll' in message:
@@ -45,8 +45,8 @@ def handle_response(message):
         return response
     if '-private' in message:
         return 'Sup?'
-    if '-' in message:
-        return "I don't understand this, please use -help to get more info."
+    if not check and '-' in message:
+        return "I don't understand this, please use -help for more info."
 
     return message
         

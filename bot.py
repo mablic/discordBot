@@ -17,9 +17,9 @@ from enum import Enum
 
 nest_asyncio.apply()
 
-async def send_message(message, userMessage, is_private):
+async def send_message(message, userMessage, is_private, check=True):
     try:
-        response = responses.handle_response(userMessage)
+        response = responses.handle_response(userMessage, check)
         await message.author.send(response) if is_private else await message.channel.send(response)
     except Exception as e:
         print(e)
@@ -309,7 +309,7 @@ def run_discord_bot():
                         await send_message(message, userMessage, is_private=True)
                 else:
                     printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for public: " + userMessage
-                    await send_message(message, userMessage, is_private=False)
+                    await send_message(message, userMessage, is_private=False, check=False)
             log.write_into_log(printMsg)
     @client.event
     async def on_voice_state_update(member, before, after):
