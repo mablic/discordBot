@@ -333,7 +333,7 @@ def run_discord_bot():
                     userDict = {}
                     userDict['userId'] = userID
                     userDict['userName'] = userName
-                    if '-remove' in userMessage:
+                    if 'remove' in userMessage:
                         try:
                             botControl.remove_time_zone(userDict)
                             await send_message(message, "Successfully remove TimeZone information.", is_private=True)
