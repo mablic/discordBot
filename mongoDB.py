@@ -42,13 +42,14 @@ class MongoDB:
         for itm in self.studyTable.find():
             channelId = itm['channelId']
             nTime = itm['time']
+            userId = itm['userId']
             userName = itm['userName']
             userMessage = '妈妈喊你打卡啦!' if not itm['message']  else itm['message']
             if channelId not in remindDict.keys():
                 remindDict[channelId] = {}
             if nTime not in remindDict[channelId].keys():
                 remindDict[channelId][nTime] = []
-            remindDict[channelId][nTime].append([userName, userMessage])
+            remindDict[channelId][nTime].append([userName, userMessage, userId])
         return remindDict
                 
     def remove_historical_scheduler(self, dict):
@@ -63,6 +64,24 @@ class MongoDB:
             print(f"Delete many records fails: userName: {dict['userName']}; channel id: {dict['channelId']}")
         finally:
             pass
+
+    def remove_historical_timezone(self, dict):
+        try:
+            criteria = {
+            "$and": [
+                { "userId": dict['userId'] }
+            ]}
+            self.studyTable.delete_many(criteria)
+        except Exception as e:
+            print(f"Delete many records fails: userName: {dict['userName']}")
+        finally:
+            pass
+    
+    def get_timezone_users(self):
+        userDict = {}
+        for itm in self.studyTable.find():
+            userDict[itm['userId']] = itm
+        return userDict
 
     def insert_to_db(self, userDict):
         if not bool(userDict):
@@ -94,7 +113,7 @@ class MongoDB:
 
     def delete_all(self):
         self.studyTable.delete_many({})
-        self.studyTable.delete_many({})
+
     def __del__(self):
         pass
 
@@ -118,11 +137,17 @@ class MongoDB:
                             userDict[userName] += 1
                         else:
                             userDict[userName] = 1
+                    
         return userDict
 
 if __name__ == '__main__':
 
     pass
+    # M = MongoDB()
+    # M.connect_to_db('studyDB', 'scheduler_checkin')
+    # M.delete_all()
+    # print(M.get_timezone_users())
+
     # df = pd.DataFrame({'studyTime': ['01/03/2022', '01/04/2022','01/03/2022', '01/04/2022'],'FRM': [380, 370, 24, 26], 'CFA': [np.nan, 370, np.nan, 26]})
     # df.fillna(0)
     # columns = df.columns.values.tolist()
@@ -131,32 +156,24 @@ if __name__ == '__main__':
     # for index, row in res.iterrows():
     #     nList = str(index) + ';' + ';'.join([str(x) for x in row])
     #     print(nList)
-    # startDate = datetime(2023, 1, 1, 0, 0, 0, 0)
-    # endDate = datetime(2023, 12, 31, 0, 0, 0, 0)
-    # dateFormat = '%Y-%m-%d'
-    # M = MongoDB()
-    # print(M.get_check_in_data('2023-01-01', '2023-12-31'))
-    # M.connect_to_db('studyDB', 'checkDB')
-    # data = M.get_collection()
+    dateFormat = '%Y-%m-%d'
+    M = MongoDB()
+    M.connect_to_db('studyDB', 'checkDB')
+    # M.get_check_in_data('2023-01-01', '2023-12-31')
+    data = M.get_collection()
 
-    # userDict = {}
-
-    # for d in data.find():
-    #     # print(f"d is: {type(d)}")
-    #     for itm in d.keys():
-    #         if itm != '_id':
-    #             date = d[itm]['checkTime']
-    #             if datetime.strptime(date, dateFormat) < startDate or datetime.strptime(date, dateFormat) > endDate:
-    #                 break
-    #             else:
-    #                 userName = date = d[itm]['checkDetails']
-    #                 findName = userName.find('>>>')
-    #                 userName = userName[:findName]
-    #                 if userName in userDict.keys():
-    #                     userDict[userName] += 1
-    #                 else:
-    #                     userDict[userName] = 1
-
-    # # Print the results
-    # for key, value in userDict.items():
-    #     print(f"userName is: {key} the count is {value}")
+    M.connect_to_db('studyDB', 'scheduler_checkin')
+    for d in data.find():
+        # print(f"d is: {type(d)}")
+        for itm in d.keys():
+            if itm != '_id':
+                insertDict = {}
+                findName = d[itm]['checkDetails'].find('>>>')
+                insertDict['userId'] = itm
+                insertDict['userName'] = d[itm]['checkDetails'][:findName]
+                insertDict['channelId'] = d[itm]['checkChannels'][0]
+                insertDict['checkTime'] = d[itm]['checkTime']
+                insertDict['details'] = d[itm]['checkDetails']
+                insertDict['guildId'] = '1061332651690180608'
+                M.insert_to_db({'1061332651690180608': insertDict})
+                

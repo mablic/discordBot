@@ -10,7 +10,7 @@ import syncBot
 import nest_asyncio
 import interview
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from discord.utils import find
 from discord.ext.commands import Bot
 from enum import Enum
@@ -39,85 +39,116 @@ def run_discord_bot():
 
     @client.event
     async def process_users_message():
-        # print(f"Start waiting for check-in")
-        while True:
-            printMsg = datetime.strftime(datetime.now(), dateFormat) + ": Bot start waiting " + str(botSet.waitTime) + ". "
-            await asyncio.sleep(botSet.waitTime)
+        botSet.botHourWait += 1
+        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": Bot start waiting " + str(botSet.waitTime) + ". "
+        await asyncio.sleep(botSet.waitTime)
+        try:
+            timeZoneUsers = botControl.get_time_zone_users()
             users = checkControl.get_users()
-            printMsg = printMsg + "End at " + datetime.strftime(datetime.now(), dateFormat) + ". "
-
-            for guild in client.guilds:
-                for channel in guild.text_channels:
-                    if channel.id in users.keys():
-                        for key in users[channel.id].keys():
-                            await channel.send(''.join(users[channel.id][key]))
-            try:
-                userDict = checkControl.check_to_db()
-                if userDict:
-                    botControl.remove_checkIn(userDict)
-                    printMsg = printMsg + " Push to the DB!"
-                    log.write_into_log(printMsg)
-            except Exception as e:
-                await channel.send("No DB Connection!")
-                printMsg = printMsg + " No DB Connection!"
-                log.write_into_log(printMsg)
-            finally:
-                pass
-
-            printMsg = ""
-            # botSet.waitTime = 10
-            botSet.waitTime = 24 * 60 * 60
+        except Exception as e:
+            printMsg + ' ' + e
+            log.write_into_log(printMsg)
+            return
+        
+        printMsg = printMsg + "End at " + datetime.strftime(datetime.now(), dateFormat) + ". "
+        removeUsers = []
+        if users:
+            for userId in users.keys():
+                for guildId in users[userId].keys():
+                    if datetime.strftime(datetime.now(), "%H") == '00':
+                        # central time msg
+                        if userId not in timeZoneUsers or int(timeZoneUsers[userId]) == int(0):
+                            removeUsers.append(users[userId][guildId])
+                    if userId in timeZoneUsers:
+                        timeZone = timeZoneUsers[userId]['timeZone']
+                        if datetime.strftime(datetime.now() + timedelta(hours=int(timeZone)), '%H') == '00':
+                            removeUsers.append(users[userId][guildId])
+        if removeUsers:
+            for user in removeUsers:
+                guildId = int(user['guildId'])
+                channelId = int(user['channelId'])
+                userId = user['userId']
+                guild = client.get_guild(int(guildId))
+                channel = guild.get_channel(channelId)
+                if channel:
+                    await channel.send(user['details'])
+                    timeZone = 0
+                    if userId in timeZoneUsers:
+                        timeZone = timeZoneUsers[userId]['timeZone']
+                    try:
+                        checkData = checkControl.check_to_db(userId, datetime.now() + timedelta(hours=int(timeZone)))
+                        botControl.add_checkIn(checkData)
+                    except Exception as e:
+                        await channel.send("No DB Connection to Check-In!")
+                        printMsg = printMsg + " No DB Connection!"
+                        log.write_into_log(printMsg)
+                    finally:
+                        pass
+        printMsg = ""
+        # botSet.waitTime = 10
+        botSet.waitTime = 60 * 60
 
     @client.event
     async def scheduler_users_message():
-        while True:
-            # print(f"Start waiting for scheduler")
-            printMsg = datetime.strftime(datetime.now(), dateFormat) + ": Bot start scheduler " + str(botSet.notifyTime) + ". "
-            await asyncio.sleep(botSet.notifyTime)
-            schedulerUsers = botControl.get_notification()
-            users = checkControl.get_users()
-            printMsg = printMsg + "End at " + datetime.strftime(datetime.now(), dateFormat) + ". "
-            currentHour = datetime.strftime(datetime.now(),'%H')
+        botSet.botHourWait += 1
+        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": Bot start scheduler " + str(botSet.notifyTime) + ". "
+        await asyncio.sleep(botSet.notifyTime)
+        schedulerUsers = botControl.get_notification()
+        timeZoneUsers = botControl.get_time_zone_users()
+        users = checkControl.get_users()
+        printMsg = printMsg + "End at " + datetime.strftime(datetime.now(), dateFormat) + ". "
 
-            # print(f"Current user is {users}")
-            # print(f"schedulerUsers: {schedulerUsers}")
-            checkInUser = set()
-            if users:
-                for channel in users.keys():
-                    # print(type(users[channel]))
-                    for key in users[channel].keys():
-                        currUser = ''.join(users[channel][key])
-                        currUser = currUser[:currUser.find('>')]
-                        checkInUser.add(currUser)
-            # print(f"checked users: {checkInUser}")
-            for guild in client.guilds:
-                for channel in guild.text_channels:
-                    reminderDict = {}
-                    # print(f"in channel: {channel}")
-                    if str(channel.id) in schedulerUsers.keys():
-                        for nTime in schedulerUsers[str(channel.id)].keys():
-                            for itm in schedulerUsers[str(channel.id)][nTime]:
-                                user, userMsg = itm
-                                # print(f"user and message is: {user} {userMsg} and the Time is: {nTime}")
-                                if user not in checkInUser and int(nTime) <= int(currentHour):
+        checkInUser = {}
+        if users:
+            for userId in users.keys():
+                for guildId in users[userId].keys():
+                    # currUser = users[userId][guildId]['userName']
+                    if guildId not in checkInUser.keys():
+                        checkInUser[guildId] = set()
+                    currUser = users[userId][guildId]['userName']
+                    checkInUser[guildId].add(currUser)
+        for guild in client.guilds:
+            for channel in guild.text_channels:
+                # if str(channel.id) != '1082853330369396817':
+                #     continue
+                reminderDict = {}
+                if str(channel.id) in schedulerUsers.keys():
+                    for nTime in schedulerUsers[str(channel.id)].keys():
+                        for itm in schedulerUsers[str(channel.id)][nTime]:
+                            user, userMsg, userId = itm
+                            timeZone = 0
+                            if str(userId) in timeZoneUsers.keys():
+                                timeZone = timeZoneUsers[str(userId)]['timeZone']
+                            currentHour = datetime.strftime(datetime.now() + timedelta(hours=int(timeZone)),"%H")
+                            if int(nTime) <= int(currentHour):
+                                if str(guild.id) not in checkInUser.keys():
                                     reminderDict[user] = userMsg
-                    # print(f"user dict is: {reminderDict}")
-                    for userName in reminderDict.keys():
-                        member = discord.utils.get(guild.members, name=userName[:userName.find('#')])
-                        if member is not None:
-                            await channel.send(f"{member.mention} , {reminderDict[userName]}!")
-                            printMsg += 'send message to ' + userName[:userName.find('#')]
-                        else:
-                            printMsg += userName[:userName.find('#')] + ' NOT FOUND!'
-                        log.write_into_log(printMsg)
-            printMsg = ""
-            # botSet.notifyTime = 5
-            botSet.notifyTime = 60 * 60
+                                else:
+                                    if user not in checkInUser[str(guild.id)]:
+                                        reminderDict[user] = userMsg
+                for userName in reminderDict.keys():
+                    member = discord.utils.get(guild.members, name=userName[:userName.find('#')])
+                    if member is not None:
+                        await channel.send(f"{member.mention} , {reminderDict[userName]}!")
+                        printMsg += 'send message to ' + userName[:userName.find('#')]
+                    else:
+                        printMsg += userName[:userName.find('#')] + ' NOT FOUND!'
+                    log.write_into_log(printMsg)
+        printMsg = ""
+        # botSet.notifyTime = 10
+        botSet.notifyTime = 60 * 60
 
     async def start_task():
         # print(f"Start Mutli-Tasks")
-        asyncio.ensure_future(process_users_message())
-        asyncio.ensure_future(scheduler_users_message())
+        while not botSet.stop_bot():
+            task1 = asyncio.ensure_future(process_users_message())
+            task2 = asyncio.ensure_future(scheduler_users_message())
+            task1.add_done_callback(on_utilized)
+            task2.add_done_callback(on_utilized)
+            await asyncio.gather(task1, task2)
+
+    def on_utilized(_):
+        botSet.botHourWait -= 1
 
     @client.event
     async def on_ready():
@@ -126,10 +157,11 @@ def run_discord_bot():
         log.write_into_log(printMsg)
         hours = datetime.now().hour
         mins = datetime.now().minute
-        botSet.waitTime = ((24-hours)*60 + (59-mins)) * 60
+        botSet.waitTime = (59-mins) * 60
         botSet.notifyTime = (59-mins) * 60
+        botSet.checkRun = 2
         # botSet.waitTime = 10
-        # botSet.notifyTime = 5
+        # botSet.notifyTime = 10
         # kick in the check in
         loop = asyncio.get_event_loop()
         try:
@@ -150,14 +182,13 @@ def run_discord_bot():
         msgChannel = str(message.channel)
         userID = str(message.author.id)
         dmChannel = await message.author.create_dm()
+        guild = message.guild
 
         # print(f"{userName} said '{userMessage}' ({msgChannel})")
         printMsg = ""
         if 'check-in' in msgChannel:
             printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " check-in."
-            # print(f"Channel: {msgChannel} user: {userName} speak at the check-in.")
-            checkControl.add_user(message.channel.id, userID, userName)
-            log.write_into_log(printMsg)
+            checkControl.add_user(guild.id, message.channel.id, userID, userName)
         elif userMessage and userMessage[0] == '-':
             if '-get date' in userMessage:
                 m = re.compile(r'(-get date)\s?([0-9]{4}-[0-9]{2}-[0-9]{2})')
@@ -298,6 +329,32 @@ def run_discord_bot():
                         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " get graph: (interval: " + str(interval) + ") (chartType: " + chartType + ") error: " + str(e) 
                     finally:
                         pass
+                elif '-timezone' in userMessage:
+                    userDict = {}
+                    userDict['userId'] = userID
+                    userDict['userName'] = userName
+                    if '-remove' in userMessage:
+                        try:
+                            botControl.remove_time_zone(userDict)
+                            await send_message(message, "Successfully remove TimeZone information.", is_private=True)
+                        except Exception as e:
+                            await send_message(message, "Unable to remove TimeZone information.", is_private=True)
+                            printMsg = printMsg + " Unable to remove TimeZone for user" + userDict['userName']
+                        finally:
+                            pass
+                    else:
+                        try:
+                            m = re.compile(r'(-timezone)\s?(\-[0-6]|\+?20|\+?1[1-9]|\+?[0-9])')
+                            m = m.match(userMessage)
+                            timeDiff = m[2]
+                            userDict['timeZone'] = timeDiff
+                            botControl.add_time_zone(userDict)
+                            await send_message(message, "Submit TimeZone information " + userDict['timeZone'] + '.', is_private=True)
+                        except Exception as e:
+                            await send_message(message, "Unable to submit TimeZone information.", is_private=True)
+                            printMsg = printMsg + " No Data Found!"                       
+                        finally:
+                            pass
                 else:
                     if userMessage and userMessage[0] == '-':
                         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " send message: " + userMessage
@@ -305,12 +362,12 @@ def run_discord_bot():
             else:
                 # print(f"PRIVATE: {userName} said '{userMessage}' ({msgChannel})")
                 if '-private' in userMessage:
-                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for private: " + userMessage
-                        await send_message(message, userMessage, is_private=True)
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for private: " + userMessage
+                    await send_message(message, userMessage, is_private=True)
                 else:
                     printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for public: " + userMessage
                     await send_message(message, userMessage, is_private=False, check=False)
-            log.write_into_log(printMsg)
+        log.write_into_log(printMsg)
     @client.event
     async def on_voice_state_update(member, before, after):
         if after.channel is not None:

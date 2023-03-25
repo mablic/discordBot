@@ -79,7 +79,11 @@ Overall, this bot will be a helpful tool for users who want to track their study
     - OPTIONAL1: time interval (day/week/month) (default: day)
     - OPTIONAL2: chart type (line/bar) (default: line)  
  - -get date OPTIONAL1: get the date's data via pie chart
-
+ - -timezone REQUIRED: set the timezone for user
+    - REQUIRED: the Bot default in the CST, user needs to entry the time different between their timezone and the CST
+    - Example: 
+       - -timezone -1: Mountain Time
+       - -timezone 1 or -timezone +1: Eastern Time
 
 ## Example Chart
 
@@ -123,6 +127,12 @@ Example of the Pie Chart
  - Beta v0.6:
     - New function for the scheduler, now the Bot can send reminder to the user
     - Bugs fix
+
+ - Beta v0.7:
+    - New function to add the time zone by user. The Bot can send reminder to the user by their time zone
+    - Update the database schema of the check-in table
+    - Update the notification class to include the Discord channel id
+    - Restrict the asynchronous with the scheduler with one core
 
 ## Authors
 

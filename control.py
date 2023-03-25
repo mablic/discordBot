@@ -26,9 +26,9 @@ class Control:
     def add_tag(self, userName, tagName):
         self.timer.add_tag(userName, tagName)
     
-    def remove_checkIn(self, dict):
+    def add_checkIn(self, dict):
         try:
-            self.DB.connect_to_db('studyDB', 'checkDB')
+            self.DB.connect_to_db('studyDB', 'scheduler_checkin')
         except Exception as e:
             print(str(e))
             return False
@@ -39,6 +39,25 @@ class Control:
         try:
             self.anyDB.connect_to_db('studyDB', 'scheduler_notification')
             self.anyDB.remove_historical_scheduler(dict)
+        except Exception as e:
+            print(str(e))
+        finally:
+            pass
+
+    def remove_time_zone(self, dict):
+        try:
+            self.connect_to_any_db('scheduler_time_zone')
+            self.anyDB.remove_historical_timezone(dict)
+        except Exception as e:
+            print(str(e))
+        finally:
+            pass
+
+    def add_time_zone(self, dict):
+        try:
+            self.connect_to_any_db('scheduler_time_zone')
+            self.anyDB.remove_historical_timezone(dict)
+            self.anyDB.insert_to_db(dict)
         except Exception as e:
             print(str(e))
         finally:
@@ -81,6 +100,17 @@ class Control:
         except Exception as e:
             print(f"Error when connect to the interview database")
             raise TypeError("Interview database not found!")
+
+
+    def get_time_zone_users(self):
+        try:
+            self.anyDB.connect_to_db('studyDB','scheduler_time_zone')
+        except Exception as e:
+            raise TypeError("cannot connecto to the database!")
+        finally:
+            pass
+        userDict = {}
+        return self.anyDB.get_timezone_users()
 
     def get_data_details(self, userName):
         try:
@@ -132,9 +162,9 @@ class Control:
         pass
 
 if __name__ == '__main__':
-    pass
-    # m = Control()
-    # m.get_check_in_graph('2023-02-20', '2023-02-26')
+    # pass
+    m = Control()
+    m.get_check_in_graph('2023-03-06', '2023-03-12')
     # newDict = {'userName':'mai','channelName':'123','time':'9','message':'妈妈', 'userId': '12312312'}
     # print(m.get_notification())
     # print(m.get_linkCode_question('easy'))

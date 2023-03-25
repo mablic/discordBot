@@ -1,9 +1,8 @@
 # Mac
 .DS_Store
 
-# igore folders
-/images
-/log
+# ignore files
+log.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -15,6 +14,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+images/
+log/
 build/
 develop-eggs/
 dist/
