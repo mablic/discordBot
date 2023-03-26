@@ -55,10 +55,15 @@ def run_discord_bot():
         if users:
             for userId in users.keys():
                 for guildId in users[userId].keys():
+                    # if str(channel.id) != '1082853330369396817':
+                    #     continue
                     if datetime.strftime(datetime.now(), "%H") == '00':
                         # central time msg
-                        if userId not in timeZoneUsers or int(timeZoneUsers[userId]) == int(0):
+                        if userId not in timeZoneUsers: #or int(timeZoneUsers[userId]) == 0:
                             removeUsers.append(users[userId][guildId])
+                        else:
+                            if int(timeZoneUsers[userId]) == 0:
+                                removeUsers.append(users[userId][guildId])
                     if userId in timeZoneUsers:
                         timeZone = timeZoneUsers[userId]['timeZone']
                         if datetime.strftime(datetime.now() + timedelta(hours=int(timeZone)), '%H') == '00':
@@ -78,15 +83,18 @@ def run_discord_bot():
                     try:
                         checkData = checkControl.check_to_db(userId, datetime.now() + timedelta(hours=int(timeZone)))
                         botControl.add_checkIn(checkData)
+                        log.write_into_log(printMsg)
                     except Exception as e:
                         await channel.send("No DB Connection to Check-In!")
                         printMsg = printMsg + " No DB Connection!"
                         log.write_into_log(printMsg)
                     finally:
                         pass
+        
         printMsg = ""
         # botSet.waitTime = 10
         botSet.waitTime = 60 * 60
+        
 
     @client.event
     async def scheduler_users_message():
@@ -155,7 +163,7 @@ def run_discord_bot():
         print(f'{client.user} is now running')
         printMsg = datetime.strftime(datetime.now(), dateFormat) + ": bot is now running"
         log.write_into_log(printMsg)
-        hours = datetime.now().hour
+        # hours = datetime.now().hour
         mins = datetime.now().minute
         botSet.waitTime = (59-mins) * 60
         botSet.notifyTime = (59-mins) * 60
@@ -367,7 +375,7 @@ def run_discord_bot():
                 else:
                     printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " from channel " + msgChannel + " send message for public: " + userMessage
                     await send_message(message, userMessage, is_private=False, check=False)
-        log.write_into_log(printMsg)
+            log.write_into_log(printMsg)
     @client.event
     async def on_voice_state_update(member, before, after):
         if after.channel is not None:
