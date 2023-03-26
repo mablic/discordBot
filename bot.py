@@ -344,9 +344,9 @@ def run_discord_bot():
                     if 'remove' in userMessage:
                         try:
                             botControl.remove_time_zone(userDict)
-                            await send_message(message, "Successfully remove TimeZone information.", is_private=True)
+                            await send_message(message, "Successfully remove TimeZone information", is_private=True)
                         except Exception as e:
-                            await send_message(message, "Unable to remove TimeZone information.", is_private=True)
+                            await send_message(message, "Unable to remove TimeZone information", is_private=True)
                             printMsg = printMsg + " Unable to remove TimeZone for user" + userDict['userName']
                         finally:
                             pass

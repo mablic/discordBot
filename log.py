@@ -3,10 +3,11 @@ import time
 
 
 def write_into_log(message):
-    with open(os.getcwd() + '/log/log.txt', 'a') as f:
-        print(f"w: {message}")
-        f.write(f"{message}\n")
-        # print(f"f: {message}")
+    if message:
+        with open(os.getcwd() + '/log/log.txt', 'a') as f:
+            print(f"w: {message}")
+            f.write(f"{message}\n")
+            # print(f"f: {message}")
 
 
 if __name__ == '__main__':
