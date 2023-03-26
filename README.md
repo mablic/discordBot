@@ -56,7 +56,7 @@ Overall, this bot will be a helpful tool for users who want to track their study
      - MongoDB data warehouse
      
 
-## Current Function (current Beta v0.5)
+## Current Function (current Beta v0.7)
 
 
  - -help: help feature
