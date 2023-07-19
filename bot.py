@@ -91,7 +91,7 @@ def run_discord_bot():
                         await channel.send(member.name + user['userMsg'])
                     botControl.remove_check_in(user['userId'])
                 except Exception as e:
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg Error (daily fortune) on user" + user['userName'] + " in channel " + user['channelId'] + " with:" + e
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg Error (daily fortune) on user" + str(user['userName']) + " in channel " + str(user['channelId']) + " with:" + e
                     log.write_into_log(printMsg)
                 finally:
                     pass
@@ -107,7 +107,7 @@ def run_discord_bot():
                     member = await guild.fetch_member(str(user))
                     await channel.send(f"{member.mention} , {schedulerUsers[str(user)]['message']}")
                 except Exception as e:
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg (notification) Error on user" + user['userName'] + " in channel " + user['channelId'] + " with:" + e
+                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg (notification) Error on user" + str(user)+ " in channel " + str(schedulerUsers[str(user)]['channelId']) + " with:" + e
                     log.write_into_log(printMsg)  
                 finally:
                     pass                 
