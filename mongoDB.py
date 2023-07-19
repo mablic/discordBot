@@ -36,21 +36,6 @@ class MongoDB:
 
     def get_collection(self):
         return self.studyTable
-
-    def get_notification(self):
-        remindDict = {}
-        for itm in self.studyTable.find():
-            channelId = itm['channelId']
-            nTime = itm['time']
-            userId = itm['userId']
-            userName = itm['userName']
-            userMessage = '妈妈喊你打卡啦!' if not itm['message']  else itm['message']
-            if channelId not in remindDict.keys():
-                remindDict[channelId] = {}
-            if nTime not in remindDict[channelId].keys():
-                remindDict[channelId][nTime] = []
-            remindDict[channelId][nTime].append([userName, userMessage, userId])
-        return remindDict
                 
     def remove_historical_scheduler(self, dict):
         try:
@@ -96,6 +81,9 @@ class MongoDB:
     def find_data_from_db(self, userName):
         return self.studyTable.find({'userName': userName})
 
+    def find_data_from_db_filter(self, filterDict):
+        return self.studyTable.find(filterDict)
+
     def find_all_data_from_db(self, field1 = '', filter= ''):
         # print(field1 + ' ' + filter)
         if filter == 'All':
@@ -107,6 +95,20 @@ class MongoDB:
             ret.append(dict(cur))
         res = ret[random.randint(1, len(ret))]
         return res['link']
+
+    def get_validate_check_in(self, userId, checkTime):
+        result = self.studyTable.find({'userId': userId, 'checkTime': checkTime})
+        return result.count() != 0
+
+    def update_check_in(self, userId, checkTime):
+        filter = {"userId": userId, "checkTime": checkTime}
+        update = {"$set": {"notificationFlag": True}}
+        self.studyTable.update_many(filter, update)
+
+    def update_sdashboard_check_in(self, userId, checkTime):
+        filter = {"userDiscordId": userId, "checkInTime": checkTime}
+        update = {"$set": {"notificationFlag": True}}
+        self.studyTable.update_many(filter, update)
 
     def get_my_tags(self, userName):
         pass
@@ -144,7 +146,9 @@ if __name__ == '__main__':
 
     pass
     # M = MongoDB()
-    # M.connect_to_db('studyDB', 'scheduler_checkin')
+    # M.connect_to_db('studyDB', 'scheduler_checkin_1')
+    # M.update_check_in("482041455360344064", datetime.now())
+    # print(M.get_validate_check_in('694765282358460519','2023-03-28'))
     # M.delete_all()
     # print(M.get_timezone_users())
 
@@ -156,24 +160,22 @@ if __name__ == '__main__':
     # for index, row in res.iterrows():
     #     nList = str(index) + ';' + ';'.join([str(x) for x in row])
     #     print(nList)
-    dateFormat = '%Y-%m-%d'
-    M = MongoDB()
-    M.connect_to_db('studyDB', 'checkDB')
-    # M.get_check_in_data('2023-01-01', '2023-12-31')
-    data = M.get_collection()
+    # dateFormat = '%Y-%m-%d'
+    # M = MongoDB()
+    # M.connect_to_db('studyDB', 'checkDB')
+    # # M.get_check_in_data('2023-01-01', '2023-12-31')
+    # data = M.get_collection()
 
-    M.connect_to_db('studyDB', 'scheduler_checkin')
-    for d in data.find():
-        # print(f"d is: {type(d)}")
-        for itm in d.keys():
-            if itm != '_id':
-                insertDict = {}
-                findName = d[itm]['checkDetails'].find('>>>')
-                insertDict['userId'] = itm
-                insertDict['userName'] = d[itm]['checkDetails'][:findName]
-                insertDict['channelId'] = d[itm]['checkChannels'][0]
-                insertDict['checkTime'] = d[itm]['checkTime']
-                insertDict['details'] = d[itm]['checkDetails']
-                insertDict['guildId'] = '1061332651690180608'
-                M.insert_to_db({'1061332651690180608': insertDict})
+    # M.connect_to_db('studyDB', 'scheduler_checkin')
+    # data = M.get_collection()
+    # res = []
+    # for d in data.find():
+    #     # print(f"d is: {type(d)}")
+    #     for itm in d.keys():
+    #         if itm != '_id':
+    #             res.append(d[itm])
+        
+    # M.connect_to_db('studyDB', 'scheduler_checkin_1')
+    # for details in res:
+    #     M.insert_to_db(details)
                 

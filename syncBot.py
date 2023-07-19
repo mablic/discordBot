@@ -9,28 +9,17 @@ class SyncBot:
         return cls.__instance
 
     def __init__(self):
-        self._botHourWait = 0
+        self._setBotToWait = False
         self._waitTime = 1
-        self._notifyTime = 1
-        self._checkRun = 0
 
     @property
-    def botHourWait(self):
-        return self._botHourWait
+    def setBotToWait(self):
+        return self._setBotToWait
     
-    @botHourWait.setter
-    def botHourWait(self, val):
-        if isinstance(val, int):
-            self._botHourWait += val
-    
-    @property
-    def checkRun(self):
-        return self._checkRun
-
-    @checkRun.setter
-    def checkRun(self, val):
-        if isinstance(val, int):
-            self._checkRun = val
+    @setBotToWait.setter
+    def setBotToWait(self, val):
+        if isinstance(val, bool):
+            self._setBotToWait = val
 
     @property
     def waitTime(self):
@@ -40,14 +29,3 @@ class SyncBot:
     def waitTime(self, val):
         if isinstance(val, int):
             self._waitTime = val
-    
-    @property
-    def notifyTime(self):
-        return self._notifyTime
-    
-    @notifyTime.setter
-    def notifyTime(self, val):
-        self._notifyTime = val
-
-    def stop_bot(self):
-        return self._botHourWait == self._checkRun
