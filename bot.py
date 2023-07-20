@@ -49,7 +49,8 @@ def run_discord_bot():
         except Exception as e:
             printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler from sdashboard Error with:" + e
             log.write_into_log(printMsg)
-            return
+        finally:
+            pass
         if sdashboardCheckIn:
             for userId in sdashboardCheckIn.keys():
                 allQuestions = sdashboardCheckIn[str(userId)]
@@ -64,10 +65,8 @@ def run_discord_bot():
                         member = await guild.fetch_member(str(userId))
                         if member is not None:
                             await channel.send(member.name + " 今天刷题了：#" + qty['questionNo'])
-                        # botControl.remove_check_in(str(user['userId']))
                     except Exception as e:
-                        printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg Error (daily fortune) on user" + user['userName'] + " in channel " + user['channelId'] + " with:" + e
-                        log.write_into_log(printMsg)
+                        print(f"Unknown error on the sdashboard check-in: {e}")
                     finally:
                         pass
                 allQuestions[0].pop('questionNo')
@@ -78,7 +77,8 @@ def run_discord_bot():
         except Exception as e:
             printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler from regular checkin Error with:" + e
             log.write_into_log(printMsg)
-            return
+        finally:
+            pass
         if dailySchedulerUsers:
             for user in dailySchedulerUsers:
                 # if str(user['channelId']) != '1067588155345215638':
@@ -89,12 +89,12 @@ def run_discord_bot():
                     member = await guild.fetch_member(str(user['userId']))
                     if member is not None:
                         await channel.send(member.name + user['userMsg'])
-                    botControl.remove_check_in(user['userId'])
                 except Exception as e:
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg Error (daily fortune) on user" + str(user['userName']) + " in channel " + str(user['channelId']) + " with:" + e
+                    print(f"Unknown error on the dailySchedulerUsers when ppls check-in: {e}")
                     log.write_into_log(printMsg)
                 finally:
-                    pass
+                    botControl.remove_check_in(user['userId'])
+                    continue
         # everyhour scheduler
         allCheckedInUsers = botControl.get_check_in_users()
         for user in schedulerUsers.keys():
@@ -106,11 +106,15 @@ def run_discord_bot():
                     channel = await client.fetch_channel(str(schedulerUsers[str(user)]['channelId']))
                     member = await guild.fetch_member(str(user))
                     await channel.send(f"{member.mention} , {schedulerUsers[str(user)]['message']}")
+                except discord.NotFound as e:
+                    print(f"Member not found: {e}")
+                    botControl.remove_notification(schedulerUsers[str(user)])
                 except Exception as e:
-                    printMsg = datetime.strftime(datetime.now(), dateFormat) + ". Scheduler Send Msg (notification) Error on user" + str(user)+ " in channel " + str(schedulerUsers[str(user)]['channelId']) + " with:" + e
-                    log.write_into_log(printMsg)  
+                    print(f"Other unknown error on the notification scheduler: {e}")
+                    # bad records, need to be removed
+                    botControl.remove_notification(schedulerUsers[str(user)])
                 finally:
-                    pass                 
+                    continue                 
         botSet.waitTime = 60 * 60
 
     def start_task():
@@ -127,9 +131,10 @@ def run_discord_bot():
     @client.event
     async def on_ready():
         print(f'{client.user} is now running')
-        printMsg = datetime.strftime(datetime.now(), dateFormat) + ": bot is now running"
-        log.write_into_log(printMsg)
+        # printMsg = datetime.strftime(datetime.now(), dateFormat) + ": bot is now running"
+        # log.write_into_log(printMsg)
         mins = datetime.now().minute
+        # botSet.waitTime = 5
         botSet.waitTime = (59-mins) * 60
         # kick in the check in
         loop = asyncio.get_event_loop()

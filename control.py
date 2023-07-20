@@ -91,6 +91,7 @@ class Control:
 
     def remove_notification(self, dict):
         self.connect_to_any_db('scheduler_notification')
+        self.DB.remove_historical_scheduler(dict)
 
     def remove_time_zone(self, dict):
         self.connect_to_any_db('scheduler_time_zone')
