@@ -108,14 +108,15 @@ def run_discord_bot():
                     await channel.send(f"{member.mention} , {schedulerUsers[str(user)]['message']}")
                 except discord.NotFound as e:
                     print(f"Member not found: {e}")
-                    botControl.remove_notification(schedulerUsers[str(user)])
+                    # botControl.remove_notification(schedulerUsers[str(user)])
                 except Exception as e:
                     print(f"Other unknown error on the notification scheduler: {e}")
                     # bad records, need to be removed
-                    botControl.remove_notification(schedulerUsers[str(user)])
+                    # botControl.remove_notification(schedulerUsers[str(user)])
                 finally:
                     continue                 
         botSet.waitTime = 60 * 60
+        # botSet.waitTime = 6
 
     def start_task():
         # print(f"Start Mutli-Tasks")
@@ -172,7 +173,7 @@ def run_discord_bot():
             try:
                 botControl.add_checkIn(userID, userCheckInDict)
             except Exception as e:
-                printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " CheckIn Fail. " + msgChannel + " get date: " + day
+                printMsg = datetime.strftime(datetime.now(), dateFormat) + ": " + userName  + " CheckIn Fail. " + msgChannel
             finally:
                 pass
         elif userMessage and userMessage[0] == '-':

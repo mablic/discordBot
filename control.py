@@ -70,12 +70,12 @@ class Control:
         return reminderUsers
 
     def add_checkIn(self, userId, dict):
-        self.connect_to_any_db('scheduler_time_zone')
-        timeZoneUsers = self.DB.get_timezone_users()
+        # self.connect_to_any_db('scheduler_time_zone')
+        # timeZoneUsers = self.DB.get_timezone_users()
         checkInTime = datetime.strftime(datetime.now(), '%Y-%m-%d')
-        if str(userId) in timeZoneUsers.keys():
-            timeZone = timeZoneUsers[str(userId)]['timeZone']
-            checkInTime = datetime.strftime(datetime.now() + timedelta(hours=int(timeZone)),'%Y-%m-%d')
+        # if str(userId) in timeZoneUsers.keys():
+        #     timeZone = timeZoneUsers[str(userId)]['timeZone']
+        #     checkInTime = datetime.strftime(datetime.now() + timedelta(hours=int(timeZone)),'%Y-%m-%d')
         dict['checkTime'] = datetime.strptime(checkInTime, '%Y-%m-%d')
         dict['userMsg'] = self.fortune.get_fortune_world()
         self.connect_to_any_db('scheduler_checkin')
