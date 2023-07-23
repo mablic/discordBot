@@ -97,7 +97,7 @@ class MongoDB:
         return res['link']
 
     def get_validate_check_in(self, userId, checkTime):
-        result = self.studyTable.find({'userId': userId, 'checkTime': checkTime})
+        result = self.studyTable.count_documents({'userId': userId, 'checkTime': checkTime})
         return result.count() != 0
 
     def update_check_in(self, userId, checkTime):
