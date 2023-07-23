@@ -98,7 +98,7 @@ class MongoDB:
 
     def get_validate_check_in(self, userId, checkTime):
         result = self.studyTable.count_documents({'userId': userId, 'checkTime': checkTime})
-        return result.count() != 0
+        return result != 0
 
     def update_check_in(self, userId, checkTime):
         filter = {"userId": userId, "checkTime": checkTime}
