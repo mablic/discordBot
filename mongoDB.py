@@ -146,7 +146,35 @@ if __name__ == '__main__':
 
     pass
     # M = MongoDB()
-    # M.connect_to_db('studyDB', 'scheduler_checkin_1')
+    # M.connect_to_db('studyDB', 'studyDB')
+    # data = M.get_collection()
+    # res = {}
+    # for d in data.find():
+    #     # print(f"d is: {type(d)}")
+    #     if d['userName'] not in res.keys():
+    #         res[d['userName']] = {}
+    #     if d['studyTime'] not in res[d['userName']].keys():
+    #         res[d['userName']][d['studyTime']] = {}
+    #     for itm in d.keys():
+    #         if itm != '_id' and itm != 'userName' and itm != 'studyTime':
+    #             if itm not in res[d['userName']][d['studyTime']].keys():
+    #                 res[d['userName']][d['studyTime']][itm] = 0
+    #             res[d['userName']][d['studyTime']][itm] += d[itm]
+    
+    # M.connect_to_db('studyDB', 'tracker_studytracker')
+    # for userId in res.keys():
+    #     for studyDate in res[userId].keys():
+    #         for topic in res[userId][studyDate].keys():
+    #             newDict = {
+    #                 'userId': "None",
+    #                 'userName' : "None",
+    #                 'discordUserId' : userId,
+    #                 'studyDate' : studyDate,
+    #                 'studyTopic' : topic,
+    #                 'studyTime' : res[userId][studyDate][topic]
+    #             }
+    #             M.insert_to_db(newDict)
+
     # M.update_check_in("482041455360344064", datetime.now())
     # print(M.get_validate_check_in('694765282358460519','2023-03-28'))
     # M.delete_all()

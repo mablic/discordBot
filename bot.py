@@ -151,12 +151,17 @@ def run_discord_bot():
         if message.author == client.user:
             return
         
-        userName = str(message.author)
-        userMessage = str(message.content)
-        msgChannel = str(message.channel)
-        userID = str(message.author.id)
-        dmChannel = await message.author.create_dm()
-        guild = message.guild
+        try:
+            userName = str(message.author)
+            userMessage = str(message.content)
+            msgChannel = str(message.channel)
+            userID = str(message.author.id)
+            dmChannel = await message.author.create_dm()
+            guild = message.guild
+        except Exception as e:
+            print("On message error:" + e)
+        finally:
+            pass
 
         # print(f"{userName} said '{userMessage}' ({msgChannel})")
         printMsg = ""

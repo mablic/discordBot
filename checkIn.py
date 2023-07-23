@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 from random import randint
 
+# DO NOT  USED
 class CheckIn:
 
     __instance = None

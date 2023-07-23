@@ -70,24 +70,26 @@ class Control:
         return reminderUsers
 
     def add_checkIn(self, userId, dict):
-        # self.connect_to_any_db('scheduler_time_zone')
-        # timeZoneUsers = self.DB.get_timezone_users()
         checkInTime = datetime.strftime(datetime.now(), '%Y-%m-%d')
-        # if str(userId) in timeZoneUsers.keys():
-        #     timeZone = timeZoneUsers[str(userId)]['timeZone']
-        #     checkInTime = datetime.strftime(datetime.now() + timedelta(hours=int(timeZone)),'%Y-%m-%d')
         dict['checkTime'] = datetime.strptime(checkInTime, '%Y-%m-%d')
         dict['userMsg'] = self.fortune.get_fortune_world()
         self.connect_to_any_db('scheduler_checkin')
         if not self.DB.get_validate_check_in(userId, datetime.strptime(checkInTime, '%Y-%m-%d')):
             self.DB.insert_to_db(dict)
-            self.checkIn.add_user(userId, dict)
+        # self.checkIn.add_user(userId, dict)
 
     def remove_check_in(self, userId):
         self.checkIn.remove_users(userId)
 
     def get_check_in_users(self):
-        return self.checkIn.get_check_in_users()
+        checkInTime = datetime.strftime(datetime.now(), '%Y-%m-%d')
+        self.connect_to_any_db('scheduler_checkin')
+        allNotifyUser = self.DB.find_data_from_db_filter({'checkTime': datetime.strptime(checkInTime, '%Y-%m-%d')})
+        checkedUsers = {}
+        for user in allNotifyUser:
+            if user['userId'] not in checkedUsers.keys():
+                checkedUsers[user['userId']] = True
+        return checkedUsers
 
     def remove_notification(self, dict):
         self.connect_to_any_db('scheduler_notification')
