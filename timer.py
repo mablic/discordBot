@@ -32,7 +32,7 @@ class Timer:
             if 'startTime' not in self.userDict[userName]:
                 # print(f" {userName} already in the dictionary!")
                 self.userDict[userName]['startTime'] = datetime.now()
-                self.userDict[userName]['studyTime'] = datetime.now()
+                self.userDict[userName]['studyTime'] = datetime.strftime(datetime.now(), self.dateFormat)
 
     def add_tag(self, userName, tagName):
         if userName not in self.userDict.keys():
@@ -52,8 +52,9 @@ class Timer:
         if userName not in self.userDict.keys():
             # print(f" User remove_user {userName} was not in the dict!")
             return
-
+        returnArray = []
         startTime = self.userDict[userName]['startTime']
+        studyTime = self.userDict[userName]['studyTime']
         endTime = datetime.now()
         totalTime = round((endTime - startTime).total_seconds() / 60, 2)
         if 'studyTag' not in self.userDict[userName]:
@@ -62,9 +63,19 @@ class Timer:
             self.userDict[userName][self.userDict[userName]['studyTag']] = totalTime
             self.userDict[userName].pop('studyTag')
         self.userDict[userName].pop('startTime')
-        returnDict = self.userDict[userName]
+        for key in self.userDict[userName].keys():
+            if key != 'userName' and key !='studyTime':
+                newDict = {
+                    'userId': 'None',
+                    'userName': 'None',
+                    'discordUserId': userName,
+                    'studyDate': datetime.strptime(studyTime, self.dateFormat),
+                    'studyTopic': str(key),
+                    'studyTime': self.userDict[userName][key]
+                }
+                returnArray.append(newDict)
         self.userDict.pop(userName)
-        return returnDict
+        return returnArray
 
 
     def __del__(self):

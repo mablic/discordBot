@@ -6,7 +6,7 @@ import sys
 import pandas as pd
 import numpy as np
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, timedelta
 sys.path.insert(1,os.getcwd() + '/web_app')
 
 
@@ -147,6 +147,7 @@ if __name__ == '__main__':
     pass
     # M = MongoDB()
     # M.connect_to_db('studyDB', 'studyDB')
+    # M.delete_all()
     # data = M.get_collection()
     # res = {}
     # for d in data.find():
@@ -160,16 +161,37 @@ if __name__ == '__main__':
     #             if itm not in res[d['userName']][d['studyTime']].keys():
     #                 res[d['userName']][d['studyTime']][itm] = 0
     #             res[d['userName']][d['studyTime']][itm] += d[itm]
-    
+    # def random_date(start_date, end_date):
+    #     time_delta = end_date - start_date
+    #     random_days = random.randint(0, time_delta.days)
+    #     random_date = start_date + timedelta(days=random_days)
+    #     return random_date
+    # # Define the start and end dates
+    # start_date = datetime(2023, 1, 1)
+    # end_date = datetime(2023, 7, 31)
     # M.connect_to_db('studyDB', 'tracker_studytracker')
+    # userId = "1059894715991982170"
+    # for i in range(150):
+    #     randomDate = datetime.strftime(random_date(start_date, end_date),"%Y-%m-%d")
+    #     newDict = {
+    #         'userId': "32",
+    #         'userName' : "None",
+    #         'discordUserId' : userId,
+    #         'studyDate' : datetime.strptime(randomDate,"%Y-%m-%d"),
+    #         'studyTopic' : 'Subject' + str(random.randint(1, 20)),
+    #         'studyTime' : random.randint(1, 200)
+    #     }
+    #     M.insert_to_db(newDict)
     # for userId in res.keys():
-    #     for studyDate in res[userId].keys():
+    # userId = "1059894715991982170"
+    # for userId in res.keys():
+    #     for studyDate in res[userId]:
     #         for topic in res[userId][studyDate].keys():
     #             newDict = {
     #                 'userId': "None",
     #                 'userName' : "None",
     #                 'discordUserId' : userId,
-    #                 'studyDate' : studyDate,
+    #                 'studyDate' : datetime.strptime(studyDate,"%Y-%m-%d"),
     #                 'studyTopic' : topic,
     #                 'studyTime' : res[userId][studyDate][topic]
     #             }

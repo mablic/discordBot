@@ -111,9 +111,10 @@ class Control:
 
     def remove_user(self, userId):
 
-        userDict = self.timer.remove_user(userId)
-        self.connect_to_any_db('studyDB')
-        self.DB.insert_to_db(userDict)
+        userArray = self.timer.remove_user(userId)
+        self.connect_to_any_db('tracker_studytracker')
+        for userDict in userArray:
+            self.DB.insert_to_db(userDict)
         return True
 
     def get_sdashboard_check_in_users(self):

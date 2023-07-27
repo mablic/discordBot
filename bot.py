@@ -150,7 +150,6 @@ def run_discord_bot():
     async def on_message(message):
         if message.author == client.user:
             return
-        
         try:
             userName = str(message.author)
             userMessage = str(message.content)
@@ -159,7 +158,7 @@ def run_discord_bot():
             dmChannel = await message.author.create_dm()
             guild = message.guild
         except Exception as e:
-            print("On message error:" + e)
+            print("Error on the author dm msg.")
         finally:
             pass
 
