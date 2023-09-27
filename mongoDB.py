@@ -144,6 +144,12 @@ class MongoDB:
 
 if __name__ == '__main__':
 
+    # M = MongoDB()
+    # M.connect_to_db('studyDB', 'dashboard_leetcode')
+    # current_collection_name = "dashboard_leetcode"
+    # new_collection_name = "dashboard_leetcode_archive"
+    # database = M.get_collection()
+    # database[current_collection_name].rename(new_collection_name, dropTarget=True)
     pass
     # M = MongoDB()
     # M.connect_to_db('studyDB', 'studyDB')
