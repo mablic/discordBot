@@ -372,7 +372,7 @@ def run_discord_bot():
             if 'Study Room' in str(after.channel.name):
                 # print(f" {member.name} join the: {str(after.channel.name)} ")
                 botControl.add_user(str(member.id))
-                await member.send("Start Timing! (Use -tag [XX your Tag] to add your focus.)")
+                await member.send("Start Timing! (Use -tag [XX your Tag] to add your focus. e.g: -tag code)")
             if 'Mock Interview' in str(after.channel.name):
                 botControl.add_user(str(member.id))
                 botControl.add_tag(str(member.id), "Mock Interview")
@@ -382,7 +382,7 @@ def run_discord_bot():
                 # print(f" {member.name} left the: {str(before.channel.name)} ")
                 if 'Study Room' in str(before.channel.name) or 'Mock Interview' in str(before.channel.name):
                     if botControl.remove_user(str(member.id)):
-                        await member.send("Finished Timing! (Use -get graph [Interval] [Chart Type] to see your data.)")
+                        await member.send("Finished Timing! Vist our website to view your data: https://studygrouppal.com/")
                     else:
                         await member.send("Error with the Timing! Please reach out for support!")
 
