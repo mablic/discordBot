@@ -155,10 +155,15 @@ def run_discord_bot():
             userMessage = str(message.content)
             msgChannel = str(message.channel)
             userID = str(message.author.id)
-            dmChannel = await message.author.create_dm()
+            try:
+                dmChannel = await message.author.create_dm()
+            except Exception as e:
+                pass
+            finally:
+                pass
             guild = message.guild
         except Exception as e:
-            print("Error on the author dm msg.")
+            print("Error on the author msg:" + userName + ", Channel name:" + msgChannel + ", userMsg:" + userMessage)
         finally:
             pass
 
