@@ -9,7 +9,11 @@ def handle_response(message, check):
         return 'Sup?'
     if '-help' in message:
         response = "***Help Menu***\n***Message bot with prefix '-'***\n***Visit our WEBSITE for Details***\n\n"
-        response += "> https://studygrouppal.com/   \n"
+        response += "> https://sdashboard.herokuapp.com/   \n"
+        response += "> Download on IOS or Android? Search for: StudyPal Team  \n"
+        response += "> For Android user, please send your gmail to: studypaltesters@googlegroups.com  \n"
+        response += "> I will add you to the tester list, i'll need 20 testers to release.  \n"
+        response += "> Thanks in advance for your help!  \n\n"
         response += "> **The Bot will automatically record your studying time when you enter any voice channel with (Study Room) in the name.**\n"
         response += "> **Find your study records in graph from our website. It's free!**\n\n"
         response += "***GENERAL***\n\n"
